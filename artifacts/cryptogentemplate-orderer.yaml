@@ -1,0 +1,15 @@
+#
+# Author: a0b013g - Supply Chain Architcture @WalmartLabs
+#
+# ---------------------------------------------------------------------------
+# "OrdererOrgs" - Definition of organizations managing orderer nodes
+# ---------------------------------------------------------------------------
+OrdererOrgs:
+  # ---------------------------------------------------------------------------
+  # Orderer
+  # ---------------------------------------------------------------------------
+  - Name: Orderer
+    Domain: DOMAIN
+
+    Specs:
+      - Hostname: orderer

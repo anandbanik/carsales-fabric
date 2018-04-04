@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "remotePath": "",
+            "port": 2345,
+            "host": "127.0.0.1",
+            "program": "${fileDirname}",
+            "env": {"CORE_CHAINCODE_LOGGING_LEVEL":"debug", "CORE_PEER_ADDRESS":"0.0.0.0:7051", "CORE_CHAINCODE_ID_NAME":"mycc:0"},
+            "args": [],
+            "buildFlags": "--tags nopkcs11",
+            "showLog": true
+        }
+    ]
+}
