@@ -725,8 +725,7 @@ if [ "${MODE}" == "up" -a "${ORG}" == "" ]; then
   do
     dockerComposeUp ${org}
   done
-
-  #for org in ${ORG1} ${ORG2} ${ORG3}
+elif [ "${MODE}" == "install" -a "${ORG}" == "" ]; then
   for org in ${ORG1} ${ORG2}
   do
     installDmvDealer ${org}
@@ -746,17 +745,12 @@ if [ "${MODE}" == "up" -a "${ORG}" == "" ]; then
   do
     installDmvRegister ${org}
   done
-
-  #createJoinInstantiateWarmUp ${ORG1} common ${CHAINCODE_COMMON_NAME} ${CHAINCODE_COMMON_INIT}
+elif [ "${MODE}" == "join" -a "${ORG}" == "" ]; then
   createJoinInstantiateWarmUp ${ORG1} "${ORG1}-${ORG2}" ${CHAINCODE_DMV_DEALER} ${CHAINCODE_DMV_DEALER_INIT}
   createJoinInstantiateWarmUp ${ORG1} "${ORG1}-${ORG3}" ${CHAINCODE_DMV_BANKER} ${CHAINCODE_DMV_BANKER_INIT}
   createJoinInstantiateWarmUp ${ORG1} "${ORG1}-${ORG4}" ${CHAINCODE_DMV_INSURANCE} ${CHAINCODE_DMV_INSURANCE_INIT}
   createJoinInstantiateWarmUp ${ORG1} register ${CHAINCODE_DMV_REGISTER} ${CHAINCODE_DMV_REGISTER_INIT}
   
-  #createJoinInstantiateWarmUp ${ORG1} "${ORG1}-${ORG2}" ${CHAINCODE_BILATERAL_NAME} ${CHAINCODE_BILATERAL_INIT}
-  #createJoinInstantiateWarmUp ${ORG1} "${ORG1}-${ORG3}" ${CHAINCODE_BILATERAL_NAME} ${CHAINCODE_BILATERAL_INIT}
-
-  #joinWarmUp ${ORG2} common ${CHAINCODE_COMMON_NAME}
   joinWarmUp ${ORG2} "${ORG1}-${ORG2}" ${CHAINCODE_DMV_DEALER} ${CHAINCODE_DMV_DEALER_INIT}
   joinWarmUp ${ORG2} register ${CHAINCODE_DMV_REGISTER} ${CHAINCODE_DMV_REGISTER_INIT}
 
@@ -765,11 +759,6 @@ if [ "${MODE}" == "up" -a "${ORG}" == "" ]; then
 
   joinWarmUp ${ORG4} "${ORG1}-${ORG4}" ${CHAINCODE_DMV_INSURANCE} ${CHAINCODE_DMV_INSURANCE_INIT}
   joinWarmUp ${ORG4} register ${CHAINCODE_DMV_REGISTER} ${CHAINCODE_DMV_REGISTER_INIT}
-  #createJoinInstantiateWarmUp ${ORG2} "${ORG2}-${ORG3}" ${CHAINCODE_BILATERAL_NAME} ${CHAINCODE_BILATERAL_INIT}
-
-  #joinWarmUp ${ORG3} common ${CHAINCODE_COMMON_NAME}
-  #joinWarmUp ${ORG3} "${ORG1}-${ORG3}" ${CHAINCODE_BILATERAL_NAME}
-  #joinWarmUp ${ORG3} "${ORG2}-${ORG3}" ${CHAINCODE_BILATERAL_NAME}
 
 elif [ "${MODE}" == "down" ]; then
   dockerComposeDown ${DOMAIN}
