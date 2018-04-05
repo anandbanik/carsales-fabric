@@ -334,6 +334,20 @@ function dockerComposeUp () {
   fi
 }
 
+
+function dockerComposeApiServerUp () {
+  compose_file="ledger/docker-compose-$1.yaml"
+
+  info "starting API Server instances from $compose_file"
+
+  TIMEOUT=${CLI_TIMEOUT} docker-compose -f ${compose_file} up -d api.$1.$DOMAIN 2>&1
+  if [ $? -ne 0 ]; then
+    echo "ERROR !!!! Unable to start network"
+    logs ${1}
+    exit 1
+  fi
+}
+
 function dockerComposeDown () {
   compose_file="ledger/docker-compose-$1.yaml"
 
@@ -725,6 +739,10 @@ if [ "${MODE}" == "up" -a "${ORG}" == "" ]; then
   do
     dockerComposeUp ${org}
   done
+  for org in ${ORG1} ${ORG2} ${ORG3} ${ORG4}
+  do 
+    dockerComposeApiServerUp ${org}
+  done  
 elif [ "${MODE}" == "install" -a "${ORG}" == "" ]; then
   for org in ${ORG1} ${ORG2}
   do
