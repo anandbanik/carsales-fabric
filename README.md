@@ -69,6 +69,19 @@ Start docker containers of all members:
 ./network.sh -m up
 ```
 
+Once the blockchain container are up, next step is to start the API servers for each organization.
+
+```bash
+./network.sh -m api-up
+```
+
+Next step is to install all the smart contracts (chaincode) to there respective node and create, join and warm-up all the channels.
+
+```bash
+./network.sh -m install
+./network.sh -m join
+```
+
 After all containers are up, browse to each member's admin web app to transact on their behalf: 
 
 - DMV [http://localhost:4000/admin](http://localhost:4000/admin)
