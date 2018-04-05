@@ -739,6 +739,7 @@ if [ "${MODE}" == "up" -a "${ORG}" == "" ]; then
   do
     dockerComposeUp ${org}
   done
+elif [ "${MODE}" == "api-up" -a "${ORG}" == "" ]; then
   for org in ${ORG1} ${ORG2} ${ORG3} ${ORG4}
   do 
     dockerComposeApiServerUp ${org}
