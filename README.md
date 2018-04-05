@@ -30,7 +30,7 @@ Network consortium consists of:
 
 They transact with each other on the following channels:
 
-- `common` involving all members and with chaincode `dm-common` deployed
+- `register` involving all members and with chaincode `register` deployed
 - bilateral confidential channels between pairs of members with chaincode `dealer` deployed to them
   - `dmv-dealer`
   - `dmv-banker`
@@ -62,20 +62,21 @@ Generate artifacts:
 ```
 
 Generated crypto material of all members, block and tx files are placed in shared `artifacts` folder on the host.
-Please wait for 7 mins before making the containers online as the certificates are generated 7 mins in advance.
 
-Start docker containers of all members:
+Please wait for 7 mins before making the containers online as the certificates are generated 7 mins in future.
+
+Start the fabric docker containers of all members, this will start the blockchain network:
 ```bash
 ./network.sh -m up
 ```
 
-Once the blockchain container are up, next step is to start the API servers for each organization.
+Once the fabric container are up, next step is to start the API servers for each organization.
 
 ```bash
 ./network.sh -m api-up
 ```
 
-Next step is to install all the smart contracts (chaincode) to there respective node and create, join and warm-up all the channels.
+Once the API servers are up, next step would be to install all the smart contracts (chaincode) to there respective nodes and join the channels.
 
 ```bash
 ./network.sh -m install
