@@ -7,7 +7,7 @@ artifacts/cryptogen-banker.yaml
 artifacts/cryptogen-dealer.yaml
 artifacts/cryptogen-dmv.yaml
 artifacts/cryptogen-insurance.yaml
-artifacts/cryptogen-walmartlabs.com.yaml
+artifacts/cryptogen-devpulsecon.com.yaml
 artifacts/fabric-ca-server-config-banker.yaml
 artifacts/fabric-ca-server-config-dealer.yaml
 artifacts/fabric-ca-server-config-dmv.yaml
@@ -15,7 +15,7 @@ artifacts/fabric-ca-server-config-insurance.yaml
 artifacts/network-config.json
 artifacts/channel/
 artifacts/crypto-config/
-ledger/docker-compose-walmartlabs.com.yaml
+ledger/docker-compose-devpulsecon.com.yaml
 ledger/docker-compose-banker.yaml
 ledger/docker-compose-banker.yaml-e
 ledger/docker-compose-dealer.yaml

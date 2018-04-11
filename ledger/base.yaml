@@ -51,7 +51,7 @@ services:
     working_dir: /etc/hyperledger/artifacts
 
   api-base:
-    image: anandbanik/hyperfabric-rest:0.1
+    image: anandbanik/hyperfabric-rest:1.0
     volumes:
      - ../artifacts:/usr/src/artifacts
      - ../middleware:/usr/src/app/middleware

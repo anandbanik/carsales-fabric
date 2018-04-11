@@ -1,11 +1,11 @@
-# Author: a0b013g - Supply Chain Architcture @WalmartLabs
+# Author: a0b013g - Supply Chain Architecture @WalmartLabs
 
 #!/usr/bin/env bash
 
 starttime=$(date +%s)
 
 # defaults; export these variables before executing this script
-: ${DOMAIN:="walmartlabs.com"}
+: ${DOMAIN:="devpulsecon.com"}
 : ${IP_ORDERER:="10.117.145.173"}
 : ${ORG1:="dmv"}
 : ${ORG2:="dealer"}
@@ -21,13 +21,6 @@ CLI_TIMEOUT=10000
 COMPOSE_TEMPLATE=ledger/docker-composetemplate.yaml
 COMPOSE_FILE_DEV=ledger/docker-composedev.yaml
 
-#CHAINCODE_COMMON_NAME=reference
-#CHAINCODE_COMMON_NAME=relationship
-#CHAINCODE_BILATERAL_NAME=dealer
-#CHAINCODE_COMMON_INIT='{"Args":["init","a","100","b","100"]}'
-#CHAINCODE_COMMON_INIT='{"Args":["init","a","100","b","100"]}'
-#CHAINCODE_BILATERAL_INIT='{"Args":["init"]}'
-#CHAINCODE_WARMUP_QUERY='{\"Args\":[\"query\",\"health\"]}'
 
 CHAINCODE_DMV_DEALER=dealer
 CHAINCODE_DMV_DEALER_INIT='{"Args":["init"]}'
@@ -404,26 +397,6 @@ function installDmvRegister() {
 }
 
 
-#function installInstantiateWarmUp() {
-#  org=$1
-#  channel_name=$2
-#  chaincode_name=$3
-#  chaincode_init=$4
-#
-#  installChaincode ${org} ${chaincode_name}
-#  instantiateWarmUp ${org} ${channel_name} ${chaincode_name} ${chaincode_init}
-#}
-
-#function instantiateWarmUp() {
-#  org=$1
-#  channel_name=$2
-#  chaincode_name=$3
-#  chaincode_init=$4
-#
-#  instantiateChaincode ${org} ${channel_name} ${chaincode_name} ${chaincode_init}
-#  sleep 7
-#  warmUpChaincode ${org} ${channel_name} ${chaincode_name}
-#}
 
 function joinWarmUp() {
   org=$1
@@ -764,7 +737,7 @@ elif [ "${MODE}" == "install" -a "${ORG}" == "" ]; then
   do
     installDmvRegister ${org}
   done
-elif [ "${MODE}" == "join" -a "${ORG}" == "" ]; then
+elif [ "${MODE}" == "channel" -a "${ORG}" == "" ]; then
   createJoinInstantiateWarmUp ${ORG1} "${ORG1}-${ORG2}" ${CHAINCODE_DMV_DEALER} ${CHAINCODE_DMV_DEALER_INIT}
   createJoinInstantiateWarmUp ${ORG1} "${ORG1}-${ORG3}" ${CHAINCODE_DMV_BANKER} ${CHAINCODE_DMV_BANKER_INIT}
   createJoinInstantiateWarmUp ${ORG1} "${ORG1}-${ORG4}" ${CHAINCODE_DMV_INSURANCE} ${CHAINCODE_DMV_INSURANCE_INIT}

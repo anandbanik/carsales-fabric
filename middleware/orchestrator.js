@@ -54,7 +54,7 @@ module.exports = function (require) {
     let args = payload.split("@");
     logger.debug('invoking register of %s for %s', args[1], args[0]);
     
-    return invoke.invokeChaincode(['peer0.dmv.walmartlabs.com:7051'], 'register',
+    return invoke.invokeChaincode(['peer0.dmv.devpulsecon.com:7051'], 'register',
       'register', 'register', args, 'orchestrator', ORG)
       .then(transactionId => {
         logger.info('applied success', transactionId);
