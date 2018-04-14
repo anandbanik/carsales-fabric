@@ -24,7 +24,7 @@ type Loan struct {
 	Amount         int     `json:"amount"`
 	SsnNumber      string  `json:"ssnNumber"`
 	LoanPeriod     int     `json:"loanPeriod"`
-	Apr            int     `json:"apr"`
+	Apr            float64 `json:"apr"`
 	MonthlyPayment float64 `json:"monthlyPayment"`
 	Status         string  `json:"status"`
 	Org            string  `json:"org"`
@@ -132,41 +132,7 @@ func (t *DmvDealerChaincode) apply(stub shim.ChaincodeStubInterface, args []stri
 
 		logger.Debug("Loan Object added")
 
-	} /*else if org == "banker" {
-
-		if len(args) != 3 {
-			return pb.Response{Status: 403, Message: "incorrect number of arguments"}
-		}
-
-		key := args[0] + "@" + args[1]
-
-		loanBytes, err := stub.GetState(key)
-
-		if err != nil {
-			return shim.Error("cannot get state")
-		} else if loanBytes == nil {
-			return shim.Error("Cannot get loan object")
-		}
-
-		var loanObj Loan
-		errUnmarshal := json.Unmarshal([]byte(loanBytes), &loanObj)
-		if errUnmarshal != nil {
-			return shim.Error("Cannot unmarshal Loan Object")
-		}
-
-		logger.Debug("Loan Object: " + string(loanBytes))
-
-		loanObj.Status = args[2]
-
-		loanObjBytes, _ := json.Marshal(loanObj)
-
-		errLoan := stub.PutState(key, loanObjBytes)
-		if errLoan != nil {
-			return shim.Error("Error updating Loan Object: " + err.Error())
-		}
-		logger.Info("Update sucessfull")
 	}
-	*/
 	return shim.Success(nil)
 }
 
@@ -207,9 +173,10 @@ func (t *DmvDealerChaincode) approve(stub shim.ChaincodeStubInterface, args []st
 
 		logger.Debug("Loan Object: " + string(loanBytes))
 
-		interest, err := strconv.Atoi(args[2])
+		interest, err := strconv.ParseFloat(args[2], 64)
+
 		if err != nil {
-			return shim.Error("Invalid Apr , expecting a integer value")
+			return shim.Error("Invalid Apr , expecting a float value")
 		}
 
 		loanObj.Apr = interest
