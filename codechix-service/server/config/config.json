@@ -3,7 +3,7 @@
     "username": "root",
     "password": "Pasw0rd@123",
     "database": "codechix",
-    "host": "127.0.0.1",
+    "host": "mysql.service.devpulsecon.com",
     "dialect": "mysql"
   },
   "test": {

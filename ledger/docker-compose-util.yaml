@@ -26,6 +26,8 @@ services:
       - 8000:8000
     #tty: true
     command: "./codechix-service/scripts/start-service.sh"
+    depends_on:
+      - mysql.service.devpulsecon.com
 
   car-blockchain-ui.devpulsecon.com:
     container_name: car-blockchain-ui.devpulsecom.com
@@ -35,5 +37,5 @@ services:
     working_dir: /
     ports:
       - 3000:3000
-    tty: true
-    #command: "./car-blockchain/config/start-ui.sh"
+    #tty: true
+    command: "./car-blockchain/config/start-ui.sh"

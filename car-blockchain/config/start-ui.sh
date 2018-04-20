@@ -2,7 +2,7 @@
 echo $PWD
 cd /car-blockchain
 echo $PWD
-npm install
+#npm install
 echo NPM install finished!
 echo $PWD
 node_modules/.bin/clap build
