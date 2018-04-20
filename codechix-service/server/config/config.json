@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "codechixusr",
+    "username": "root",
     "password": "Pasw0rd@123",
     "database": "codechix",
-    "host": "codechixmysql.stg-codechix.codechix.isd-architecture.qa.walmart.com",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
