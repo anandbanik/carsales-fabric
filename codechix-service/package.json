@@ -1,0 +1,24 @@
+{
+  "name": "codechix-api",
+  "version": "1.0.0",
+  "description": "Code Chix API",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "nodemon ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "anand.banik@walmartlabs.com",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "morgan": "^1.8.2",
+    "mysql2": "^1.4.2",
+    "sequelize": "^4.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0",
+    "sequelize-cli": "^2.8.0"
+  }
+}
