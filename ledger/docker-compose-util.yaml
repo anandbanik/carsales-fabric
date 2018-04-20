@@ -1,0 +1,39 @@
+# Author: a0b013g - Supply Chain Architcture @WalmartLabs
+#
+
+version: '2'
+
+services:
+ 
+  mysql.service.devpulsecon.com:
+    container_name: mysql.service.devpulsecon.com
+    image: mysql:5.5
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      #- MYSQL_DATABASE: codechix
+    ports: 
+      - 3306:3306
+    volumes:
+      - ../codechix-service/dbscripts:/docker-entrypoint-initdb.d
+
+  codechix-service.devpulsecon.com:
+    container_name: codechix-service.devpulsecon.com
+    image: node:latest
+    volumes:
+      - ../codechix-service:/codechix-service
+    working_dir: /
+    ports:
+      - 8000:8000
+    #tty: true
+    command: "./codechix-service/scripts/start-service.sh"
+
+  car-blockchain-ui.devpulsecon.com:
+    container_name: car-blockchain-ui.devpulsecom.com
+    image: node:latest
+    volumes:
+      - ../car-blockchain:/car-blockchain
+    working_dir: /
+    ports:
+      - 3000:3000
+    tty: true
+    #command: "./car-blockchain/config/start-ui.sh"

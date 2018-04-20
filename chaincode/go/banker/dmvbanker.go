@@ -216,28 +216,28 @@ func (t *DmvDealerChaincode) query(stub shim.ChaincodeStubInterface, args []stri
 		return shim.Success(nil)
 	}
 
-	creatorBytes, err := stub.GetCreator()
-	if err != nil {
-		return shim.Error("cannot get creator")
-	}
-
-	ssn, org := getCreator(creatorBytes)
-
-	if org == "" {
-		logger.Debug("Org is null")
-	} else if org == "dmv" {
-
-		if len(args) != 1 {
-			return pb.Response{Status: 403, Message: "incorrect number of arguments"}
-		}
-
-		key := ssn + "@" + args[0]
-
-		bytes, err := stub.GetState(key)
+		creatorBytes, err := stub.GetCreator()
 		if err != nil {
-			return shim.Error("cannot get state")
+			return shim.Error("cannot get creator")
 		}
-		return shim.Success(bytes)
+
+		ssn, org := getCreator(creatorBytes)
+
+		if org == "" {
+			logger.Debug("Org is null")
+		} else if org == "dmv" {
+
+			if len(args) != 1 {
+				return pb.Response{Status: 403, Message: "incorrect number of arguments"}
+			}
+
+			key := ssn + "@" + args[0]
+
+			bytes, err := stub.GetState(key)
+			if err != nil {
+				return shim.Error("cannot get state")
+			}
+			return shim.Success(bytes)
 	} else if org == "banker" {
 
 		if len(args) != 2 {
