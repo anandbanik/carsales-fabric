@@ -8,29 +8,47 @@ import "../../styles/negotiation.css";
 import "../../styles/skeleton.css";
 import "../../styles/custom.css";
 
-import { fetchRegistrations } from "../../helper/nodeservice-helper";
+import getToken from "../../helper/get-token";
+import { fetchVehicle } from "../../helper/nodeservice-helper";
+import {
+  queryDMVRegistration,
+  registrationUser
+} from "../../helper/blockchain-helper";
 
+/* eslint-disable no-loop-func */
 class RegisterBox extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit() {
+    const data = this.props;
+
+    getToken("user-admin", "user").then(bearToken => {
+      // Blockchain Server: broker approves the transaction
+      registrationUser({
+        bearToken,
+        peers: "dmv/peer0",
+        ssn: data.ssnNumber,
+        status: "approve",
+        vin: data.vin
+      });
+    });
   }
 
   render() {
     this.props = this.props && this.props.data;
     return (
       <tr>
-        <td> {this.props.id} </td>
-        <td> {this.props.customer_id} </td>
-        <td> {this.props.vin_number} </td>
-        <td> {this.props.tag_id} </td>
-        <td> {this.props.insurance_id} </td>
-        <td> {this.props.start_date} </td>
-        <td> {this.props.end_date} </td>
+        <td> {this.props.ssnNumber} </td>
+        <td> {this.props.vin} </td>
+        <td> {this.props.startDate} </td>
+        <td> {this.props.endDate} </td>
+        <td> {this.props.status} </td>
         <td>
-          <button>Approve</button>
-        </td>
-        <td>
-          <button>Deny</button>
+          <button onClick={this.handleSubmit}>Approve</button>
         </td>
       </tr>
     );
@@ -41,27 +59,33 @@ class Registration extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      registrations: [
-        {
-          id: "1",
-          customer_id: "1",
-          vin_number: "123123",
-          tag_id: "547-ADI",
-          insurance_id: "2",
-          start_date: "09/18/2017",
-          end_date: "09/17/2019",
-          status: true
-        }
-      ]
+      registrations: []
     };
   }
 
   componentDidMount() {
-    return fetchRegistrations().then(registrations => {
-      console.log("REGIS:::", registrations); // eslint-disable-line
-      if (!registrations.hasOwnProperty("message")) {
-        this.setState({ registrations });
-      }
+    const ret = [];
+    const tmpKep = {};
+    return fetchVehicle().then(cars => {
+      return getToken("user-admin", "user").then(bearToken => {
+        let requests = 0;
+        for (const i in cars) {
+          requests++;
+          queryDMVRegistration({
+            bearToken,
+            vin: cars[i].vin_number
+          }).then(data => {
+            requests--;
+            if (data.result) {
+              ret.push(data.result);
+            }
+            if (requests === 0) {
+              tmpKep.registrations = ret;
+              this.setState(tmpKep);
+            }
+          });
+        }
+      });
     });
   }
 
@@ -77,18 +101,15 @@ class Registration extends React.Component {
           <table>
             <tbody>
               <tr>
-                <td>ID</td>
-                <td> CustomerID </td>
+                <td> SSN Number </td>
                 <td> VIN Number </td>
-                <td> Coverage </td>
-                <td> Monthly Cost </td>
                 <td> Start Date </td>
                 <td> End Date </td>
+                <td> Status </td>
                 <td> Approve </td>
-                <td> Deny </td>
               </tr>
               {this.state.registrations.map(v => (
-                <RegisterBox key={v.id} data={v} />
+                <RegisterBox key={v.vin} data={v} />
               ))}
             </tbody>
           </table>
@@ -100,13 +121,13 @@ class Registration extends React.Component {
 
 RegisterBox.propTypes = {
   data: PropTypes.object,
-  id: PropTypes.number,
-  customer_id: PropTypes.number,
-  vin_number: PropTypes.number,
-  start_date: PropTypes.string,
-  end_date: PropTypes.string,
-  insurance_id: PropTypes.string,
-  tag_id: PropTypes.string
+  vin: PropTypes.number,
+  startDate: PropTypes.string,
+  endDate: PropTypes.string,
+  ssnNumber: PropTypes.string,
+  status: PropTypes.string
 };
 
 export default Registration;
+
+/* eslint-enable */

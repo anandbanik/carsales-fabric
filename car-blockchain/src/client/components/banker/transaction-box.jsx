@@ -6,6 +6,7 @@ import "../../styles/custom.css";
 import "../../styles/user.css";
 import negotiationStyles from "../../styles/negotiation.css";
 
+import getToken from "../../helper/get-token";
 import { createLoan } from "../../helper/nodeservice-helper";
 
 class Transaction extends React.Component {
@@ -14,7 +15,7 @@ class Transaction extends React.Component {
 
     this.handleComments = this.handleComments.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDeny = this.handleDeny.bind(this);
+
     this.state = {
       replyText: ""
     };
@@ -28,42 +29,23 @@ class Transaction extends React.Component {
   }
 
   handleSubmit() {
-    // Node service, banker approved & set APR
-    const data = this.props.data;
+    getToken("user-admin", "banker").then(() => {
+      // Node service, banker approved & set APR
+      const data = this.props.data;
 
-    return createLoan({
-      customer_id: data.customer_id,
-      vin_number: data.vin_number,
-      amount: data.amount,
-      loan_period_months: data.loan_period_months,
-      ssn_number: data.ssn_number,
-      monthly_payment: data.monthly_payment,
-      status: "approved",
-      apr: this.state.replyText
-    }).then(() => {
-      this.setState({
-        replyText: ""
+      return createLoan({
+        vin_number: data.vin_number,
+        amount: data.amount,
+        loan_period_months: data.loan_period_months,
+        ssn_number: data.ssn_number,
+        monthly_payment: data.monthly_payment,
+        status: "approved",
+        apr: this.state.replyText
+      }).then(() => {
+        this.setState({
+          replyText: ""
+        });
       });
-      window.location = window.location;
-    });
-  }
-
-  handleDeny() {
-    const data = this.props.data;
-
-    return createLoan({
-      customer_id: data.customer_id,
-      vin_number: data.vin_number,
-      amount: data.amount,
-      loan_period_months: data.loan_period_months,
-      ssn_number: data.ssn_number,
-      monthly_payment: data.monthly_payment,
-      status: "denined"
-    }).then(() => {
-      this.setState({
-        replyText: ""
-      });
-      window.location = window.location;
     });
   }
 
@@ -75,7 +57,7 @@ class Transaction extends React.Component {
             <section className={negotiationStyles["basic-info"]}>
               VIN: {this.props.data.vin_number}
               <br />
-              CustomerID: {this.props.data.customer_id}
+              SSN: {"user-admin"}
             </section>
 
             <section className={negotiationStyles["loan-info"]}>
@@ -85,11 +67,6 @@ class Transaction extends React.Component {
               <br />
               Loan Term: {this.props.data.loan_period_months}
             </section>
-            {/* <section className={negotiationStyles["insurance-info"]}>
-              Insurance Status: {this.props.data.insurance_status}
-              <br />
-              Insuarance Amount: {this.props.data.insurance_amount}
-            </section> */}
           </div>
           <div className={negotiationStyles.expectation}>
             <span className={negotiationStyles.subtitle}>
@@ -107,12 +84,6 @@ class Transaction extends React.Component {
               onClick={this.handleSubmit}
             >
               Approve
-            </button>
-            <button
-              className={negotiationStyles.button}
-              onClick={this.handleDeny}
-            >
-              Deny
             </button>
           </div>
         </div>

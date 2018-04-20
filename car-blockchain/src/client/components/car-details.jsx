@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { browserHistory } from "react-router";
 import ReactModal from "react-modal";
 
 import "../styles/skeleton.css";
@@ -73,7 +74,7 @@ class CarDetails extends React.Component {
 
         // Node-server create-negotiation
         createNegotiation({
-          customer_id: 1,
+          ssn_number: "user-admin",
           vin_number: this.props.vin_number,
           actual_price: this.state.requestedPrice,
           loan: "",
@@ -178,6 +179,20 @@ class CarDetails extends React.Component {
               <tr>
                 <td>
                   <button onClick={this.handleSubmit}>Contact Dealer</button>
+                  <button
+                    onClick={() => {
+                      browserHistory.push("/user");
+                    }}
+                  >
+                    Back to Inventory
+                  </button>
+                  <button
+                    onClick={() => {
+                      browserHistory.push("/");
+                    }}
+                  >
+                    Back to Main
+                  </button>
                 </td>
               </tr>
             </tbody>

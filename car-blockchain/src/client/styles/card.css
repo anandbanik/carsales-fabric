@@ -1,4 +1,6 @@
 .card {
-    width: 50%;
-    margin: 10px 25%;
+  width: 20%;
+  margin: 10px 2%;
+  display: inline-block;
+  vertical-align: top;
 }

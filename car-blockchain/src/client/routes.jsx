@@ -10,7 +10,7 @@ import DealerTransactions from "./components/dealer/dealer-transactions";
 import Banker from "./components/banker/banker";
 import Broker from "./components/broker/broker";
 import Registration from "./components/registration/registration";
-import Admin from "./components/admin";
+import Admin from "./components/admin/admin";
 
 export const routes = (
   <Router>

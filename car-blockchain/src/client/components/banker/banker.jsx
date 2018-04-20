@@ -39,7 +39,7 @@ class Banker extends React.Component {
           }`}
         >
           {this.state.transactions.map(v => (
-            <Transaction key={v.id} data={v} />
+            <Transaction key={v.vin_number} data={v} />
           ))}
         </div>
       </div>

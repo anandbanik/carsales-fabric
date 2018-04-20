@@ -76,6 +76,10 @@ const fetchRegistrations = function() {
   return fetchHandler("/registrations", "Registrations");
 };
 
+const fetchRegistration = function(postData) {
+  return fetchWithDataHandler("/get-registration", postData, "Registration");
+};
+
 /*
 * @params: path(string), payloadData(object), category(string)
 * @return: data(object)
@@ -164,6 +168,7 @@ module.exports = {
   fetchInsurance,
   fetchAllInsurances,
   fetchRegistrations,
+  fetchRegistration,
 
   updateNegotiation,
   updateTransaction,

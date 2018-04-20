@@ -21,6 +21,9 @@ body {
 .anim-banner.dmv-banner {
   background-color: #4259f4;
 }
+.anim-banner.admin-banner {
+  background-color: #6c757d;
+}
 
 .anim-banner .title {
   color: #fff;

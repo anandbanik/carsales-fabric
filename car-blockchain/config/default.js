@@ -53,6 +53,7 @@ module.exports = {
       module: "electrode-react-webapp/lib/hapi",
       options: {
         pageTitle: "car-blockchain",
+        serverSideRendering: false,
         paths: {
           "/{args*}": {
             content: {

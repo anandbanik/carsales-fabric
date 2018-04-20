@@ -41,7 +41,7 @@ plugin.register = (server, options1, next) => {
     path: "/create-negotiation",
     handler: (request, reply) => {
       const postData = querystring.stringify({
-        customer_id: request.payload.customer_id,
+        ssn_number: request.payload.ssn_number,
         vin_number: request.payload.vin_number,
         actual_price: request.payload.actual_price,
         status: request.payload.status,
@@ -85,17 +85,17 @@ plugin.register = (server, options1, next) => {
     method: "PUT",
     path: "/update-negotiation",
     handler: (request, reply) => {
-      //get from id and postData from request
-      const id = request.payload.id;
       const postData = querystring.stringify({
-        id,
-        comments: request.payload.comments,
-        status: request.payload.status
+        ssn_number: request.payload.ssn_number,
+        vin_number: request.payload.vin_number,
+        actual_price: request.payload.actual_price,
+        status: request.payload.status,
+        comments: request.payload.comments
       });
 
       const options = {
         host: "10.117.138.202",
-        path: `/api/negotiation/${id}`,
+        path: "/api/negotiation/update",
         port: "8000",
         method: "PUT",
         headers: {

@@ -7,6 +7,45 @@ const plugin = {};
 /* eslint-disable no-console */
 plugin.register = (server, options1, next) => {
   server.route({
+    method: "POST",
+    path: "/get-registration",
+    handler: (request, reply) => {
+      const postData = querystring.stringify(request.payload);
+
+      const options = {
+        host: "10.117.138.202",
+        path: "/api/get/registration",
+        port: "8000",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Length": Buffer.byteLength(postData)
+        }
+      };
+
+      const req = http.request(options, res => {
+        const bodyChunks = [];
+        res
+          .on("data", (chunk) => {
+            bodyChunks.push(chunk);
+          })
+          .on("end", () => {
+            const body = Buffer.concat(bodyChunks);
+            const results = JSON.parse(body);
+            return reply(results);
+          });
+      });
+
+      req.on("error", (e) => {
+        console.log(`ERROR: ${e.message}`);
+        return reply(`ERROR: ${e.message}`);
+      });
+      req.write(postData);
+      req.end();
+    }
+  });
+
+  server.route({
     method: "GET",
     path: "/registrations",
     handler: (request, reply) => {
