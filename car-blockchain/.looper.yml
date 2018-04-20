@@ -1,0 +1,12 @@
+envs:
+  global:
+    variables:
+      ELECTRODE_BUILD_URL: https://18041b6190de461274b48dd40fc75c7c5f8eac53@gecgithub01.walmart.com/api/v3/repos/electrode-ops/build/contents/bootstrap.sh?ref=master
+checkoutDir: repo
+flows:
+  default:
+    - call: electrode_build
+
+  electrode_build:
+    - shell (name electrode_build): |
+        curl -H "Accept: application/vnd.github.VERSION.raw" "${ELECTRODE_BUILD_URL}" | bash

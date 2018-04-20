@@ -1,0 +1,54 @@
+.car {
+  width: 100%;
+  align-items: left;
+  margin: 0 0 5px 0;
+  padding: 15px 0;
+}
+
+.car .car-info {
+  text-align: left;
+}
+
+.car .car-img,
+.car .car-price {
+  text-align: center;
+}
+
+.car .car-img,
+.car .car-info,
+.car .car-price {
+  width: 33%;
+  height: 100%;
+}
+
+.car .car-img {
+  max-width: 300px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.car .car-title {
+  font-weight: 800;
+  font-size: 1.3em;
+}
+
+.car .car-price .car-price-sale {
+  color: #77a1d3;
+  font-weight: 800;
+  font-size: 1.6em;
+}
+
+.car .car-price button {
+  border: none;
+  color: white;
+  background-image: linear-gradient(
+    to right,
+    #818387 0%,
+    #d4d6db 51%,
+    #818387 100%
+  );
+}
+
+.car button.hide {
+  display: none;
+}

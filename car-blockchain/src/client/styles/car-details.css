@@ -1,0 +1,67 @@
+.car-details {
+  width: 100%;
+}
+
+.car-details img {
+  width: 100%;
+  max-width: 600px;
+  display: block;
+}
+
+.car-details-info {
+  width: 72%;
+  margin: 2% 2% 0 2%;
+}
+
+.contact-dealer {
+  background-color: #ececec;
+  width: 20%;
+  height: 100vh;
+  padding: 2%;
+}
+
+.contact-dealer textarea {
+  width: 90%;
+}
+
+.contact-dealer  textbox {
+  width: 90%;
+}
+
+.contact-dealer button {
+  font-size: 0.5em;
+  padding: 0 0.5em;
+  margin: 0 auto;
+  text-align: center;
+  float: right;
+}
+
+.car-details .car-details-info .info-left,
+.car-details .car-details-info .info-right {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.car-details .car-details-info .info-left .location {
+  font-weight: 800;
+  font-size: 1.1em;
+}
+
+.car-details .car-details-info .info-right {
+  font-size: 1.8em;
+  font-weight: 800;
+  color: #77a1d3;
+  float: right;
+  margin-right: 5%;
+}
+
+.car-details .fill-in {
+  width: 33%;
+  border: none;
+  height: 1.1em;
+}
+
+.car-details .expected-price {
+  margin-left: 5px;
+  width: 70px;
+}

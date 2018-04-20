@@ -1,0 +1,82 @@
+body {
+  font-family: Arial, sans-serrif;
+}
+.anim-banner {
+  height: 150px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.anim-banner.user-banner {
+  background-color: #DD5E89;
+}
+.anim-banner.dealer-banner {
+  background-color: #77a1d3;
+}
+.anim-banner.banker-banner {
+  background-color: #f4c542;
+}
+.anim-banner.broker-banner {
+  background-color: #00f995;
+}
+.anim-banner.dmv-banner {
+  background-color: #4259f4;
+}
+
+.anim-banner .title {
+  color: #fff;
+  position: relative;
+  top: 50%;
+  font-weight: 100;
+}
+.anim-banner .title h2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.anim-banner .slide {
+  animation-name: slide;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+.anim-banner .slide2 {
+  animation-name: slide;
+  animation-duration: 200s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+.anim-banner .slide3 {
+  animation-name: slide;
+  animation-duration: 150s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+.anim-1 {
+  height: inherit;
+  width: 100%;
+  position: absolute;
+  background-image: url('https://zoo.azurewebsites.net/Custom/Themes/SimpleBlog/img/effect_3.png');
+}
+.anim-2 {
+  height: inherit;
+  width: 100%;
+  position: absolute;
+  background-image: url('https://zoo.azurewebsites.net/Custom/Themes/SimpleBlog/img/effect_2.png');
+}
+.anim-3 {
+  height: inherit;
+  width: 100%;
+  position: absolute;
+  background-image: url('https://zoo.azurewebsites.net/Custom/Themes/SimpleBlog/img/effect_1.png');
+}
+
+@keyframes slide {
+  0% {
+    background-position-x: 0%;
+  }
+  100% {
+    background-position-x: 100%;
+  }
+}

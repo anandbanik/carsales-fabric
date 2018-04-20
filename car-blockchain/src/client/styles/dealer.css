@@ -1,0 +1,30 @@
+.dealerView {
+  width: 100%;
+  align-items: top;
+}
+
+.dealerView .tabs {
+  margin: 0;
+  width: 100%;
+}
+
+.dealerView .tabs button {
+  padding: 0;
+  width: 15em;
+  float: right;
+  margin: 0 2%;
+}
+
+.dealerView .tabs .cars-list img {
+  width: 33%;
+}
+
+.dealerView .tabs button.active {
+  background-color: #818387;
+  border: none;
+  color: white;
+}
+
+.dealerView .tabs button.active:hover {
+  cursor: default;
+}

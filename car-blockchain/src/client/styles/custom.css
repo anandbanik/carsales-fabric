@@ -1,0 +1,146 @@
+.container {
+  max-width: 800px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.header {
+  margin-top: 6rem;
+  text-align: center;
+}
+.docs-header {
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  letter-spacing: .2rem;
+  font-weight: 600;
+}
+.docs-section {
+  border-top: 1px solid #eee;
+  padding: 4rem 0;
+  margin-bottom: 0;
+}
+.docs-example .row,
+.docs-example.row,
+.docs-example {
+  margin-bottom: 0;
+}
+.docs-example h1,
+.docs-example h2,
+.docs-example h3,
+.docs-example h4,
+.docs-example h5,
+.docs-example h6 {
+  margin-bottom: 1rem;
+}
+.heading-font-size {
+  font-size: 1.2rem;
+  color: #999;
+  letter-spacing: normal;
+}
+
+/* Larger than phone */
+@media (min-width: 550px) {
+  .header {
+    margin-top: 18rem;
+  }
+
+  .docs-section {
+    padding: 6rem 0;
+  }
+}
+
+/* Larger than tablet */
+@media (min-width: 750px) {
+  /* Re-overiding the width 100% declaration to match size of % based container */
+  .container {
+    width: 80%;
+  }
+}
+
+img {
+  vertical-align: text-bottom;
+}
+
+.roleButton,
+.roleButton:hover {
+  color: white;
+  border: none;
+  width: 200px;
+}
+
+.roleButton.user {
+  background-image: linear-gradient(to right, #DD5E89 0%, #F7BB97 51%, #DD5E89 100%)
+}
+.roleButton.user:hover {
+  background-image: linear-gradient(to right, #F7BB97 0%, #DD5E89 51%, #F7BB97 100%);
+}
+
+.roleButton.dealer {
+  background-image: linear-gradient(to right, #77A1D3 0%, #79CBCA 51%, #77A1D3 100%)
+}
+.roleButton.dealer:hover {
+  background-image: linear-gradient(to right, #79CBCA 0%, #77A1D3 51%, #79CBCA 100%)
+}
+
+.roleButton.banker {
+  background-image: linear-gradient(to right, #f4c542 0%, #efeb73 51%, #f4c542 100%)
+}
+.roleButton.banker:hover {
+  background-image: linear-gradient(to right, #efeb73 0%, #f4c542 51%, #efeb73 100%)
+}
+
+.roleButton.broker {
+  background-image: linear-gradient(to right, #00f995 0%, #b2ffe0 51%, #00f995 100%)
+}
+.roleButton.broker:hover {
+  background-image: linear-gradient(to right, #b2ffe0 0%, #00f995 51%, #b2ffe0 100%)
+}
+
+.roleButton.dmv {
+  background-image: linear-gradient(to right, #4259f4 0%, #95a2f9 51%, #4259f4 100%)
+}
+.roleButton.dmv:hover {
+  background-image: linear-gradient(to right, #95a2f9 0%, #4259f4 51%, #95a2f9 100%)
+}
+
+.demoAppContainer h2 {
+  margin: 50px 0;
+  text-align: center;
+}
+
+.buttonsList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.buttonsList button {
+  margin: 1% auto;
+}
+
+.customModal {
+  width: 300px;
+  height: 100px;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -70px 0 0 -170px;
+  border: 1px solid black;
+  border-radius: 10px;
+  outline: none;
+}
+
+.customModal .closeButton {
+  padding: 0;
+  margin: 0;
+  float: right;
+}
+
+.customModal .closeButton:hover {
+  cursor: pointer;
+}
+
+.customModal div {
+  margin-top: 25px;
+}

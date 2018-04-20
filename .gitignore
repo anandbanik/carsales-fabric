@@ -30,3 +30,4 @@ artifacts/dmv-banker.block
 artifacts/dmv-insurance.block
 artifacts/register.block
 codechix-service/node_modules
+car-blockchain/node_modules

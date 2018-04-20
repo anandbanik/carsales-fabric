@@ -1,0 +1,102 @@
+.negotiation {
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.negotiation .expectation {
+  width: 50%;
+  margin: 0 auto;
+  text-align: left;
+  display: inline-block;
+}
+
+.negotiation .subtitle {
+  font-weight: 800;
+  font-size: 1.1em;
+}
+
+.negotiation .expectation hr {
+  margin-right: 20%;
+}
+
+.negotiation .vehicle-info {
+  margin-top: 2%;
+}
+
+.negotiation .vehicle-info .vehicle-info-text {
+  width: 50%;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  position: relative;
+}
+
+.negotiation .expectation table tr {
+  vertical-align: baseline;
+}
+
+.negotiation .expectation table tr th,
+.negotiation .expectation table tr td {
+  padding: 10px 10px 0;
+}
+
+.negotiation button {
+  color: white;
+  background-image: linear-gradient(to right, #000 0%, #d4d6db 51%, #000 100%);
+}
+
+.negotiation button:disabled {
+  opacity: 0.5;
+  background-image: linear-gradient(to right, #555 0%, #d4d6db 51%, #555 100%);
+}
+
+.negotiation .hide {
+  display: none;
+}
+
+.negotiation .accepted {
+  background-color: forestgreen;
+  background-image: none;
+  color: white;
+}
+
+.negotiation section {
+  border: 1px solid #eee;
+  text-align: left;
+  padding: 10px 90px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 25%;
+  margin: 0 auto;
+  min-width: 140px;
+}
+
+.negotiation ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  
+  width: 25%;
+  margin: 0 auto;
+}
+
+.negotiation ul li {
+  background-color: #eee;
+  margin: 0;
+  border: 1px solid white;
+  padding: 0 10px;
+  min-width: 70px;
+}
+
+.negotiation ul li:hover {
+  cursor: pointer;
+}
+
+.negotiation ul li.selectedTab {
+  background: #555;
+  color: white;
+}

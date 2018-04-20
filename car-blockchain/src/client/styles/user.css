@@ -1,0 +1,20 @@
+.userView {
+  width: 100%;
+  align-items: top;
+}
+
+.history,
+.listings {
+  float: right;
+  margin: 0 2%;
+}
+
+.userView .filterBox {
+  width: 19%;
+  border: 2px solid grey;
+  height: 100vh;
+}
+
+.userView .cars-list {
+  width: 100%;
+}
