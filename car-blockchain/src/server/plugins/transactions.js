@@ -5,6 +5,9 @@ const plugin = {};
 const http = require("http");
 const querystring = require("querystring");
 
+const HOST = "10.117.138.202";
+const PORT = "8000";
+
 /* eslint-disable no-console */
 plugin.register = function(server, options1, next) {
   server.route({
@@ -18,9 +21,9 @@ plugin.register = function(server, options1, next) {
       });
 
       const options = {
-        host: "10.117.138.202",
+        host: HOST,
         path: `/api/loan/${id}`,
-        port: "8000",
+        port: PORT,
         method: "PUT",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

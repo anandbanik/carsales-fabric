@@ -2,6 +2,7 @@
 
 const http = require("http");
 const plugin = {};
+const HOST = "10.117.163.109";
 
 /* eslint-disable no-console */
 plugin.register = (server, options1, next) => {
@@ -14,7 +15,7 @@ plugin.register = (server, options1, next) => {
       });
 
       const options = {
-        host: "10.117.163.109",
+        host: HOST,
         path: "/users",
         port: request.payload.portNumber,
         method: "POST",

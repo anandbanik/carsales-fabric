@@ -3,6 +3,8 @@
 const http = require("http");
 const querystring = require("querystring");
 const plugin = {};
+const HOST = "10.117.138.202";
+const PORT = "8000";
 
 /* eslint-disable no-console */
 plugin.register = function(server, option1, next) {
@@ -11,9 +13,9 @@ plugin.register = function(server, option1, next) {
     path: "/vehicles",
     handler: (request, reply) => {
       const options = {
-        host: "10.117.138.202",
+        host: HOST,
         path: "/api/vehicle",
-        port: "8000"
+        port: PORT
       };
 
       const req = http.get(options, (res) => {
@@ -53,9 +55,9 @@ plugin.register = function(server, option1, next) {
       });
 
       const options = {
-        host: "10.117.138.202",
+        host: HOST,
         path: "/api/vehicle",
-        port: "8000",
+        port: PORT,
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -96,9 +98,9 @@ plugin.register = function(server, option1, next) {
       });
 
       const options = {
-        host: "10.117.138.202",
+        host: HOST,
         path: `/api/vehicle/${id}`,
-        port: "8000",
+        port: PORT,
         method: "PUT",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
