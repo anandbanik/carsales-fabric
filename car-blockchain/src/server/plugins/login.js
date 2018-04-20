@@ -2,7 +2,7 @@
 
 const http = require("http");
 const plugin = {};
-const HOST = "10.117.163.109";
+const HOST = "127.0.0.1";
 
 /* eslint-disable no-console */
 plugin.register = (server, options1, next) => {

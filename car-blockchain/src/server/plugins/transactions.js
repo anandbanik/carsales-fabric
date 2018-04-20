@@ -5,7 +5,7 @@ const plugin = {};
 const http = require("http");
 const querystring = require("querystring");
 
-const HOST = "10.117.138.202";
+const HOST = "127.0.0.1";
 const PORT = "8000";
 
 /* eslint-disable no-console */
