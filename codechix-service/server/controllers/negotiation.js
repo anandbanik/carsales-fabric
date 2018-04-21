@@ -23,7 +23,7 @@ module.exports = {
             status: req.body.status,
             dealer_name: req.body.dealer_name,
             ssn_number: req.body.ssn_number,
-            comments: req.body.comments + "|",
+            comments: req.body.comments,
         })
         .then(negotiation => res.status(201).send(negotiation))
         .catch(error => res.status(400).send(error));
@@ -99,7 +99,7 @@ module.exports = {
             actual_price: req.body.actual_price || negotiation[0].actual_price,
             status: req.body.status || negotiation[0].status,
             dealer_name: req.body.dealer_name || negotiation[0].dealer_name,
-            comments: negotiation[0].comments + " | " + req.body.comments || negotiation[0].comments,
+            comments: negotiation[0].comments + "," + req.body.comments,
         })
         .then(() => res.status(200).send(negotiation[0]))
         .catch((error) => res.status(400).send(error));

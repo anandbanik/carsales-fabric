@@ -94,7 +94,7 @@ class Negotiation extends React.Component {
           comment: commentsText,
           action: "negotiate"
         });
-
+        console.log("Comments Text: "+commentsText)
         updateNegotiation({
           ssn_number: ssnNumber,
           vin_number: vinNumber,

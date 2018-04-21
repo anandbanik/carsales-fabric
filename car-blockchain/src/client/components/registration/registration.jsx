@@ -26,7 +26,7 @@ class RegisterBox extends React.Component {
   handleSubmit() {
     const data = this.props;
 
-    getToken("user-admin", "user").then(bearToken => {
+    getToken("dmv-admin", "user").then(bearToken => {
       // Blockchain Server: broker approves the transaction
       registrationUser({
         bearToken,

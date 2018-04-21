@@ -77,7 +77,7 @@ module.exports = function (require) {
     post_data = '{ "vin_number":"'+args[1]+'","status":"Apply","start_date":"'+start_date+'","end_date":"'+end_date+'","ssn_number":"'+args[0]+'"}';
 
     var post_options = {
-    hostname: '10.117.138.202',
+    hostname: 'codechix-service.devpulsecon.com',
     port    : '8000',
     path    : '/api/registration',
     method  : 'POST',

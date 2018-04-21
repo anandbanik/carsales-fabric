@@ -1,23 +1,29 @@
 module.exports = (uname, role) => {
   let portNumber = "";
-
+  let hostName = "";
   switch (role) {
     case "user":
+      hostName = "api.dmv.devpulsecon.com";
       portNumber = "4000";
       break;
     case "dealer":
-      portNumber = "4001";
+      hostName = "api.dealer.devpulsecon.com";
+      portNumber = "4000";
       break;
     case "banker":
-      portNumber = "4002";
+      hostName = "api.banker.devpulsecon.com";
+      portNumber = "4000";
       break;
     case "insurance":
-      portNumber = "4003";
+      hostName = "api.insurance.devpulsecon.com";
+      portNumber = "4000";
       break;
     case "registration":
-      portNumber = "4004";
+      hostName = "api.dmv.devpulsecon.com";
+      portNumber = "4000";
       break;
     default:
+      hostName = "api.dmv.devpulsecon.com";
       portNumber = "4000";
       break;
   }
@@ -29,7 +35,8 @@ module.exports = (uname, role) => {
     },
     body: JSON.stringify({
       username: uname,
-      portNumber
+      portNumber,
+      hostName
     })
   })
     .then(response => {

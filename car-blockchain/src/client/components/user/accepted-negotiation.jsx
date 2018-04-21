@@ -250,7 +250,7 @@ class AcceptedNegotiation extends React.Component {
               <button
                 className={negotiationStyles.button}
                 onClick={this.handleLoan}
-                disabled={this.state.loan.status}
+                disabled={this.state.loan && this.state.loan.status}
               >
                 Apply for Loan
               </button>
@@ -267,7 +267,7 @@ class AcceptedNegotiation extends React.Component {
               <button
                 className={negotiationStyles.button}
                 onClick={this.handleInsurance}
-                disabled={this.state.insurance.status}
+                disabled={this.state.loan && this.state.insurance.status}
               >
                 Insurance & Registration
               </button>

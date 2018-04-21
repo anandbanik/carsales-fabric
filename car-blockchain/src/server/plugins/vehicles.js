@@ -3,7 +3,7 @@
 const http = require("http");
 const querystring = require("querystring");
 const plugin = {};
-const HOST = "127.0.0.1";
+const HOST = "codechix-service.devpulsecon.com";
 const PORT = "8000";
 
 /* eslint-disable no-console */
