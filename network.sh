@@ -776,6 +776,7 @@ elif [ "${MODE}" == "down" ]; then
 elif [ "${MODE}" == "clean" ]; then
   clean
 elif [ "${MODE}" == "util-up" ]; then
+  mkdir -p ledger/data
   startUtilContainers
 elif [ "${MODE}" == "generate" ]; then
   clean
