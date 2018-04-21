@@ -39,3 +39,12 @@ services:
       - 3000:3000
     #tty: true
     command: "./car-blockchain/config/start-ui.sh"
+
+  portainer.devpulsecon.com:
+    image: portainer/portainer
+    container_name: portainer.devpulsecon.com
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/data
+    ports:
+      - 9000:9000

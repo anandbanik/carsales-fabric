@@ -80,7 +80,8 @@ Once the API servers are up, next step would be to install all the smart contrac
 
 ```bash
 ./network.sh -m install
-./network.sh -m join
+./network.sh -m channel
+./network.sh -m util-up
 ```
 
 After all containers are up, browse to each member's admin web app to transact on their behalf: 

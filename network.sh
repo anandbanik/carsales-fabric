@@ -331,9 +331,22 @@ function dockerComposeUp () {
 function dockerComposeApiServerUp () {
   compose_file="ledger/docker-compose-$1.yaml"
 
-  info "starting API Server instances from $compose_file"
+  info "starting API Servers instances from $compose_file"
 
   TIMEOUT=${CLI_TIMEOUT} docker-compose -f ${compose_file} up -d api.$1.$DOMAIN 2>&1
+  if [ $? -ne 0 ]; then
+    echo "ERROR !!!! Unable to start network"
+    logs ${1}
+    exit 1
+  fi
+}
+
+function startUtilContainers(){
+  compose_file="ledger/docker-compose-util.yaml"
+
+  info "starting Util Servers instances from $compose_file"
+
+  TIMEOUT=${CLI_TIMEOUT} docker-compose -f ${compose_file} up -d 2>&1
   if [ $? -ne 0 ]; then
     echo "ERROR !!!! Unable to start network"
     logs ${1}
@@ -762,6 +775,8 @@ elif [ "${MODE}" == "down" ]; then
   removeUnwantedImages
 elif [ "${MODE}" == "clean" ]; then
   clean
+elif [ "${MODE}" == "util-up" ]; then
+  startUtilContainers
 elif [ "${MODE}" == "generate" ]; then
   clean
   generatePeerArtifacts ${ORG1} 4000 8081 7054 7051 7053 7056 7058
