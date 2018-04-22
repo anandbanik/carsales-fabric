@@ -68,7 +68,7 @@ function removeUnwantedImages() {
 
 function removeArtifacts() {
   echo "Removing generated and downloaded artifacts"
-  rm ledger/docker-compose-*.yaml
+  rm ledger/docker-compose-*.yaml-e
   rm -rf artifacts/crypto-config
   rm -rf artifacts/channel
   rm artifacts/*block*
@@ -88,6 +88,7 @@ function removeDockersFromCompose() {
         echo "Removing docker containers listed in $f"
         docker-compose -f ${f} kill
         docker-compose -f ${f} rm -f
+        rm ${f}
       fi;
     done
 }

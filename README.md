@@ -81,7 +81,6 @@ Once the API servers are up, next step would be to install all the smart contrac
 ```bash
 ./network.sh -m install
 ./network.sh -m channel
-./network.sh -m util-up
 ```
 
 After all containers are up, browse to each member's admin web app to transact on their behalf: 
@@ -108,6 +107,23 @@ Remove dockers:
 ```bash
 ./network.sh -m clean
 ```
+
+Deploy the codechix-service middleware, mysql for master data, portainer UI and the electrode UI
+
+```bash
+cd codechix-service
+npm install
+cd ../car-blockchain
+npm install
+cd ..
+./network -m util-up
+```
+
+Once the container are up, go to 
+
+[http://localhost:3000] (http://localhost:3000)
+
+to view the UI.
 
 ## Decentralized deployment
 
