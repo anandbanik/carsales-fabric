@@ -121,7 +121,7 @@ cd ..
 
 Once the container are up, go to 
 
-[http://localhost:3000] (http://localhost:3000)
+[http://localhost:3000](http://localhost:3000)
 
 to view the UI.
 
