@@ -197,7 +197,7 @@ function generatePeerArtifacts() {
     sed -e "s/ORG/$org/g" artifacts/fabric-ca-server-configtemplate.yaml > artifacts/"fabric-ca-server-config-$org.yaml"
 
     echo "Generating crypto material with cryptogen"
-    docker-compose --file ${f} run --rm "cli.$org.$DOMAIN" bash -c "sleep 2 && cryptogen generate --config=cryptogen-$org.yaml"
+    docker-compose --file ${f} run --rm "cli.$org.$DOMAIN" bash -c "sleep 2 && rm -rf crypto-config && cryptogen generate --config=cryptogen-$org.yaml"
 
     echo "Changing artifacts ownership"
     docker-compose --file ${f} run --rm "cli.$org.$DOMAIN" bash -c "chown -R $UID:$GID ."
@@ -786,8 +786,10 @@ elif [ "${MODE}" == "generate" ]; then
   generatePeerArtifacts ${ORG3} 4002 8083 9054 9051 9053 9056 9058
   generatePeerArtifacts ${ORG4} 4003 8084 10054 10051 10053 10056 10058
   generateOrdererDockerCompose
-  generateOrdererArtifacts
+  #generateOrdererArtifacts
   generateWait
+elif [ "${MODE}" == "orderer-generate" ]; then
+  generateOrdererArtifacts
 elif [ "${MODE}" == "generate-orderer" ]; then
   generateOrdererDockerCompose
   downloadArtifactsOrderer

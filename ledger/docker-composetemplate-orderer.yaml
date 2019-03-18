@@ -8,7 +8,8 @@ services:
 
   orderer.DOMAIN:
     container_name: orderer.DOMAIN
-    image: hyperledger/fabric-orderer:x86_64-1.0.3
+    #image: hyperledger/fabric-orderer:x86_64-1.0.3
+    image: hyperledger/fabric-orderer:1.4.0
     environment:
       - ORDERER_GENERAL_LOGLEVEL=debug
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
