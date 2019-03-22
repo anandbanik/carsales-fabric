@@ -25,10 +25,12 @@ ledger/docker-compose-dmv.yaml
 ledger/docker-compose-dmv.yaml-e
 ledger/docker-compose-insurance.yaml
 ledger/docker-compose-insurance.yaml-e
+ledger/data/*
 www/artifacts/
 artifacts/dmv-dealer.block
 artifacts/dmv-banker.block
 artifacts/dmv-insurance.block
 artifacts/register.block
 codechix-service/node_modules
+codechix-service/package-lock.json
 car-blockchain/node_modules

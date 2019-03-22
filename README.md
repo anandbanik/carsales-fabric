@@ -1,4 +1,4 @@
-# Starter Application for Hyperledger Fabric 1.0
+# Car Buying experience with Hyperledger Fabric
 
 Create a network to jump start development of your decentralized application.
 
