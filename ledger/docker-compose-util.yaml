@@ -5,8 +5,8 @@ version: '2'
 
 services:
  
-  mysql.service.blockchain-uofa.com:
-    container_name: mysql.service.blockchain-uofa.com
+  mysql.service.blockchain.uofa.edu:
+    container_name: mysql.service.blockchain.uofa.edu
     image: mysql:5.5
     environment:
       - MYSQL_ROOT_PASSWORD=Pasw0rd@123
@@ -16,8 +16,8 @@ services:
     volumes:
       - ../codechix-service/dbscripts:/docker-entrypoint-initdb.d
 
-  codechix-service.blockchain-uofa.com:
-    container_name: codechix-service.blockchain-uofa.com
+  codechix-service.blockchain.uofa.edu:
+    container_name: codechix-service.blockchain.uofa.edu
     image: node:latest
     volumes:
       - ../codechix-service:/codechix-service
@@ -29,8 +29,8 @@ services:
     depends_on:
       - mysql.service.devpulsecon.com
 
-  car-blockchain-ui.blockchain-uofa.com:
-    container_name: car-blockchain-ui.blockchain-uofa.com
+  car-blockchain-ui.blockchain.uofa.edu:
+    container_name: car-blockchain-ui.blockchain.uofa.edu
     image: node:latest
     volumes:
       - ../car-blockchain:/car-blockchain
@@ -40,9 +40,9 @@ services:
     #tty: true
     command: "./car-blockchain/config/start-ui.sh"
 
-  portainer.blockchain-uofa.com:
+  portainer.blockchain.uofa.edu:
     image: portainer/portainer
-    container_name: portainer.blockchain-uofa.com
+    container_name: portainer.blockchain.uofa.edu
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./data:/data
