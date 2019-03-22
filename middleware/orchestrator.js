@@ -54,7 +54,7 @@ module.exports = function (require) {
     let args = payload.split("@");
     logger.debug('invoking register of %s for %s', args[1], args[0]);
     
-    return invoke.invokeChaincode(['peer0.dmv.devpulsecon.com:7051'], 'register',
+    return invoke.invokeChaincode(['peer0.dmv.blockchain.uofa.edu:7051'], 'register',
       'register', 'register', args, 'orchestrator', ORG)
       .then(transactionId => {
         logger.info('applied success', transactionId);
@@ -77,7 +77,7 @@ module.exports = function (require) {
     post_data = '{ "vin_number":"'+args[1]+'","status":"Apply","start_date":"'+start_date+'","end_date":"'+end_date+'","ssn_number":"'+args[0]+'"}';
 
     var post_options = {
-    hostname: 'codechix-service.devpulsecon.com',
+    hostname: 'codechix-service.blockchain.uofa.edu',
     port    : '8000',
     path    : '/api/registration',
     method  : 'POST',

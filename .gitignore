@@ -34,3 +34,5 @@ artifacts/register.block
 codechix-service/node_modules
 codechix-service/package-lock.json
 car-blockchain/node_modules
+artifacts/cryptogen-blockchain.uofa.edu.yaml
+ledger/docker-compose-blockchain.uofa.edu.yaml

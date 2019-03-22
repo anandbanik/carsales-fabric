@@ -5,7 +5,7 @@
 starttime=$(date +%s)
 
 # defaults; export these variables before executing this script
-: ${DOMAIN:="devpulsecon.com"}
+: ${DOMAIN:="blockchain.uofa.edu"}
 : ${IP_ORDERER:="10.117.145.173"}
 : ${ORG1:="dmv"}
 : ${ORG2:="dealer"}

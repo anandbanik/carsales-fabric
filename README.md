@@ -22,7 +22,7 @@ Most of the plumbing work is taken care of by this starter.
 
 Network consortium consists of:
 
-- Orderer organization `devpulsecon.com`
+- Orderer organization `blockchain.uofa.edu`
 - Peer organization org1 `dmv` 
 - Peer organization org2 `dealer` 
 - Peer organization org3 `banker`
@@ -41,12 +41,12 @@ Replace these sources with your own.
 
 Each organization starts several docker containers:
 
-- **peer0** (ex.: `peer0.dmv.devpulsecon.com`) with the anchor [peer](https://github.com/hyperledger/fabric/tree/release/peer) runtime
-- **peer1** `peer1.dmv.devpulsecon.com` with the secondary peer
-- **ca** `ca.dmv.devpulsecon.com` with certificate authority server [fabri-ca](https://github.com/hyperledger/fabric-ca)
-- **api** `api.dmv.devpulsecon.com` with [fabric-rest](https://gecgithub01.walmart.com/a0b013g/hyperfabric-rest.git) API server
-- **www** `www.dmv.devpulsecon.com` with a simple http server to serve members' certificate files during artifacts generation and setup
-- **cli** `cli.dmv.devpulsecon.com` with tools to run commands during setup
+- **peer0** (ex.: `peer0.dmv.blockchain.uofa.edu`) with the anchor [peer](https://github.com/hyperledger/fabric/tree/release/peer) runtime
+- **peer1** `peer1.dmv.blockchain.uofa.edu` with the secondary peer
+- **ca** `ca.dmv.blockchain.uofa.edu` with certificate authority server [fabri-ca](https://github.com/hyperledger/fabric-ca)
+- **api** `api.dmv.blockchain.uofa.edu` with [fabric-rest](https://gecgithub01.walmart.com/a0b013g/hyperfabric-rest.git) API server
+- **www** `www.dmv.blockchain.uofa.edu` with a simple http server to serve members' certificate files during artifacts generation and setup
+- **cli** `cli.dmv.blockchain.uofa.edu` with tools to run commands during setup
 
 ## Local deployment
 
@@ -93,7 +93,7 @@ After all containers are up, browse to each member's admin web app to transact o
 Tail logs of each member's docker containers by passing its name as organization `-o` argument:
 ```bash
 # orderer
-./network.sh -m logs -m devpulsecon.com
+./network.sh -m logs -m blockchain.uofa.edu
 
 # members
 ./network.sh -m logs -m dmv
@@ -130,7 +130,7 @@ to view the UI.
 Deploy containers of each member to separate hosts connecting via internet.
 
 Note the docker-compose files don't change much from the local deployment and containers still refer to each other by 
-domain names `api.dmv.devpulsecon.com`, `peer1.banker.devpulsecon.com` etc. However they can no longer discover each other within a local
+domain names `api.dmv.blockchain.uofa.edu`, `peer1.banker.blockchain.uofa.edu` etc. However they can no longer discover each other within a local
 docker network and need to resolve these names to real ips on the internet. We use `extra_hosts` setting in docker-compose 
 files to map domain names to real ips which come as args to the script. Specify member hosts ip addresses 
 in [network.sh](network.sh) file or by env variables:
