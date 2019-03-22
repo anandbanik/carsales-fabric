@@ -3,7 +3,7 @@
     "username": "root",
     "password": "Pasw0rd@123",
     "database": "codechix",
-    "host": "mysql.service.devpulsecon.com",
+    "host": "mysql.service.blockchain.uofa.edu",
     "dialect": "mysql"
   },
   "test": {

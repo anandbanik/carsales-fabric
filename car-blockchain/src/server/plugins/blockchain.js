@@ -56,7 +56,7 @@ plugin.register = (server, options1, next) => {
       };
 
       const options = {
-        host: "api.dealer.devpulsecon.com",
+        host: "api.dealer.blockchain.uofa.edu",
         path: "/channels/dmv-dealer/chaincodes/dealer",
         port: "4000",
         method: "POST",
@@ -88,7 +88,7 @@ plugin.register = (server, options1, next) => {
       };
 
       const options = {
-        host: "api.dmv.devpulsecon.com",
+        host: "api.dmv.blockchain.uofa.edu",
         path: "/channels/dmv-dealer/chaincodes/dealer",
         port: "4000",
         method: "POST",
@@ -120,7 +120,7 @@ plugin.register = (server, options1, next) => {
       };
 
       const options = {
-        host: "api.dmv.devpulsecon.com",
+        host: "api.dmv.blockchain.uofa.edu",
         path: "/channels/dmv-banker/chaincodes/banker",
         port: "4000",
         method: "POST",
@@ -148,7 +148,7 @@ plugin.register = (server, options1, next) => {
       };
 
       const options = {
-        host: "api.banker.devpulsecon.com",
+        host: "api.banker.blockchain.uofa.edu",
         path: "/channels/dmv-banker/chaincodes/banker",
         port: "4000",
         method: "POST",
@@ -176,7 +176,7 @@ plugin.register = (server, options1, next) => {
       };
 
       const options = {
-        host: "api.dmv.devpulsecon.com",
+        host: "api.dmv.blockchain.uofa.edu",
         path: "/channels/dmv-insurance/chaincodes/insurance",
         port: "4000",
         method: "POST",
@@ -204,7 +204,7 @@ plugin.register = (server, options1, next) => {
       };
 
       const options = {
-        host: "api.insurance.devpulsecon.com",
+        host: "api.insurance.blockchain.uofa.edu",
         path: "/channels/dmv-insurance/chaincodes/insurance",
         port: "4000",
         method: "POST",
@@ -229,7 +229,7 @@ plugin.register = (server, options1, next) => {
       };
 
       const options = {
-        host: "api.dmv.devpulsecon.com",
+        host: "api.dmv.blockchain.uofa.edu",
         path: "/channels/register/chaincodes/register",
         port: "4000",
         method: "POST",
@@ -248,7 +248,7 @@ plugin.register = (server, options1, next) => {
     path: "/blockchain-query-dmv-dealer",
     handler: (request, reply) => {
       const options = {
-        host: "api.dmv.devpulsecon.com",
+        host: "api.dmv.blockchain.uofa.edu",
         path: `/channels/dmv-dealer/chaincodes/dealer?args=%5B%22${
           request.query.vin
         }%22%5D&fcn=query&peer=dmv%2Fpeer0`,
@@ -281,7 +281,7 @@ plugin.register = (server, options1, next) => {
     path: "/blockchain-query-dmv-registration",
     handler: (request, reply) => {
       const options = {
-        host: "api.dmv.devpulsecon.com",
+        host: "api.dmv.blockchain.uofa.edu",
         path: `/channels/register/chaincodes/register?args=%5B%22${
           request.query.vin
         }%22%5D&fcn=query&peer=dmv%2Fpeer0`,
@@ -314,7 +314,7 @@ plugin.register = (server, options1, next) => {
     path: "/blockchain-query-dmv-insurance",
     handler: (request, reply) => {
       const options = {
-        host: "api.dmv.devpulsecon.com",
+        host: "api.dmv.blockchain.uofa.edu",
         path: `/channels/dmv-insurance/chaincodes/insurance?args=%5B%22${
           request.query.vin
         }%22%5D&fcn=query&peer=dmv%2Fpeer1`,
@@ -347,7 +347,7 @@ plugin.register = (server, options1, next) => {
     path: "/blockchain-query-dmv-banker",
     handler: (request, reply) => {
       const options = {
-        host: "api.dmv.devpulsecon.com",
+        host: "api.dmv.blockchain.uofa.edu",
         path: `/channels/dmv-banker/chaincodes/banker?args=%5B%22${
           request.query.vin
         }%22%5D&fcn=query&peer=dmv%2Fpeer0`,

@@ -27,7 +27,7 @@ services:
     #tty: true
     command: "./codechix-service/scripts/start-service.sh"
     depends_on:
-      - mysql.service.devpulsecon.com
+      - mysql.service.blockchain.uofa.edu
 
   car-blockchain-ui.blockchain.uofa.edu:
     container_name: car-blockchain-ui.blockchain.uofa.edu
