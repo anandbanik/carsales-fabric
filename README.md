@@ -1,22 +1,27 @@
 # Car Buying experience with Hyperledger Fabric
 
-Create a network to jump start development of your decentralized application.
+
+This project demostrate car-buying experience with Hyperledger Fabric.
 
 The network can be deployed to multiple docker containers on one host for development or to multiple hosts for testing 
 or production.
 
 Scripts of this starter generate crypto material and config files, start the network and deploy your chaincodes. 
 Developers can use admin web app of 
-[REST API server](https://gecgithub01.walmart.com/a0b013g/hyperfabric-rest/tree/master/www-admin) 
+[REST API server](https://github.com/anandbanik/hyperfabric-rest/tree/master/www-admin) 
 to invoke and query chaincodes, explore blocks and transactions.
 
 What's left is to develop your chaincodes and place them into the [chaincode](./chaincode) folder, 
 and user interface as a single page web app that you can serve by by placing the sources into the [www](./www) folder. 
 You can take web app code or follow patterns of the 
-[admin app](https://gecgithub01.walmart.com/a0b013g/hyperfabric-rest/tree/master/www-admin) to enroll users, 
+[admin app](https://github.com/anandbanik/hyperfabric-rest/tree/master/www-admin) to enroll users, 
 invoke chaincodes and subscribe to events.
 
 Most of the plumbing work is taken care of by this starter.
+
+## Architecture Diagram
+
+![Design](/artifacts/images/Car_Sales_Architecture.png)
 
 ## Members and Components
 
