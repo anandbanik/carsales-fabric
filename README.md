@@ -41,8 +41,6 @@ They transact with each other on the following channels:
   - `dmv-banker`
   - `dmv-insurance`
 
-Both chaincodes are copies of [chaincode_example02](https://github.com/hyperledger/fabric/tree/release/examples/chaincode/go/chaincode_example02).
-Replace these sources with your own.
 
 Each organization starts several docker containers:
 
@@ -306,10 +304,3 @@ Finally:
 ./network.sh -m devdown
 ```
 
-## Acknowledgements
-
-This environment uses a very helpful [fabric-rest](https://gecgithub01.walmart.com/a0b013g/hyperfabric-rest.git) API server developed separately and 
-instantiated from its docker image.
-
-The scripts are inspired by [first-network](https://github.com/hyperledger/fabric-samples/tree/release/first-network) and 
- [balance-transfer](https://github.com/hyperledger/fabric-samples/tree/release/balance-transfer) of Hyperledger Fabric samples.
