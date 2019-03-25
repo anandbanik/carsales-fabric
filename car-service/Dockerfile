@@ -1,8 +1,8 @@
 FROM node:latest
 
-RUN mkdir codechix-service
+RUN mkdir car-service
 
-WORKDIR /codechix-service/
+WORKDIR /car-service/
 
 COPY bin ./bin
 
