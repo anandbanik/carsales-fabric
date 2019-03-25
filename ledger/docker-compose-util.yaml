@@ -20,12 +20,12 @@ services:
     container_name: car-master-service.blockchain.uofa.edu
     image: node:latest
     volumes:
-      - ../car-master-service:/car-master-service
+      - ../car-service:/car-service
     working_dir: /
     ports:
       - 8000:8000
     #tty: true
-    command: "./car-master-service/scripts/start-service.sh"
+    command: "./car-service/scripts/start-service.sh"
     depends_on:
       - mysql.service.blockchain.uofa.edu
 
