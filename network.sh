@@ -365,6 +365,17 @@ function dockerComposeDown () {
 
 }
 
+
+function dockerComposeUtilDown () {
+  compose_file="ledger/docker-compose-$1.yaml"
+
+  if [ -f ${compose_file} ]; then
+      info "stopping docker instances from $compose_file"
+      docker-compose -f ${compose_file} down
+  fi;
+
+}
+
 function installAll() {
   org=$1
 
@@ -772,6 +783,7 @@ elif [ "${MODE}" == "down" ]; then
   dockerComposeDown ${ORG2}
   dockerComposeDown ${ORG3}
   dockerComposeDown ${ORG4}
+  dockerComposeDown "util"
   removeUnwantedContainers
   removeUnwantedImages
 elif [ "${MODE}" == "clean" ]; then
