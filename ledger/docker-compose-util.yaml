@@ -16,16 +16,16 @@ services:
     volumes:
       - ../codechix-service/dbscripts:/docker-entrypoint-initdb.d
 
-  codechix-service.blockchain.uofa.edu:
-    container_name: codechix-service.blockchain.uofa.edu
+  car-master-service.blockchain.uofa.edu:
+    container_name: car-master-service.blockchain.uofa.edu
     image: node:latest
     volumes:
-      - ../codechix-service:/codechix-service
+      - ../car-master-service:/car-master-service
     working_dir: /
     ports:
       - 8000:8000
     #tty: true
-    command: "./codechix-service/scripts/start-service.sh"
+    command: "./car-master-service/scripts/start-service.sh"
     depends_on:
       - mysql.service.blockchain.uofa.edu
 

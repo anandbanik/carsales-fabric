@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo $PWD
-cd /codechix-service
+cd /car-master-service
 echo $PWD
 #npm install
 npm run start:dev

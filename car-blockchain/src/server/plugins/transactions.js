@@ -5,7 +5,7 @@ const plugin = {};
 const http = require("http");
 const querystring = require("querystring");
 
-const HOST = "codechix-service.blockchain.uofa.edu";
+const HOST = "car-master-service.blockchain.uofa.edu";
 const PORT = "8000";
 
 /* eslint-disable no-console */

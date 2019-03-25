@@ -77,7 +77,7 @@ module.exports = function (require) {
     post_data = '{ "vin_number":"'+args[1]+'","status":"Apply","start_date":"'+start_date+'","end_date":"'+end_date+'","ssn_number":"'+args[0]+'"}';
 
     var post_options = {
-    hostname: 'codechix-service.blockchain.uofa.edu',
+    hostname: 'car-master-service.blockchain.uofa.edu',
     port    : '8000',
     path    : '/api/registration',
     method  : 'POST',
