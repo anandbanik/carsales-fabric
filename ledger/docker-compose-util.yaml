@@ -14,7 +14,7 @@ services:
     ports: 
       - 3306:3306
     volumes:
-      - ../codechix-service/dbscripts:/docker-entrypoint-initdb.d
+      - ../car-service/dbscripts:/docker-entrypoint-initdb.d
 
   car-master-service.blockchain.uofa.edu:
     container_name: car-master-service.blockchain.uofa.edu
