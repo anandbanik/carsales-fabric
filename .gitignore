@@ -31,8 +31,8 @@ artifacts/dmv-dealer.block
 artifacts/dmv-banker.block
 artifacts/dmv-insurance.block
 artifacts/register.block
-codechix-service/node_modules
-codechix-service/package-lock.json
+car-service/node_modules
+car-service/package-lock.json
 car-blockchain/node_modules
 artifacts/cryptogen-blockchain.uofa.edu.yaml
 ledger/docker-compose-blockchain.uofa.edu.yaml
