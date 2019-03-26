@@ -11,8 +11,8 @@ Developers can use admin web app of
 [REST API server](https://github.com/anandbanik/hyperfabric-rest/tree/master/www-admin) 
 to invoke and query chaincodes, explore blocks and transactions.
 
-What's left is to develop your chaincodes and place them into the [chaincode](./chaincode) folder, 
-and user interface as a single page web app that you can serve by by placing the sources into the [www](./www) folder. 
+What's left is to develop your chaincodes and place them into the [chaincode](./chaincode) folder.
+User interface is written in [Electrode](https://www.electrode.io/), you can find the code in the [car-blockchain](./car-blockchain) folder.
 You can take web app code or follow patterns of the 
 [admin app](https://github.com/anandbanik/hyperfabric-rest/tree/master/www-admin) to enroll users, 
 invoke chaincodes and subscribe to events.
@@ -50,6 +50,32 @@ Each organization starts several docker containers:
 - **api** `api.dmv.blockchain.uofa.edu` with [fabric-rest](https://gecgithub01.walmart.com/a0b013g/hyperfabric-rest.git) API server
 - **www** `www.dmv.blockchain.uofa.edu` with a simple http server to serve members' certificate files during artifacts generation and setup
 - **cli** `cli.dmv.blockchain.uofa.edu` with tools to run commands during setup
+
+## Prerequisites
+
+### Docker & Docker-Compose
+
+1. Download Docker from [here](https://www.docker.com/products/docker-desktop) and follow the instruction to install the docker.
+
+Docker Desktop for Mac and Docker Desktop for Windows already inlcude Compose along with other Docker apps, so users do not need to install Compose separately.
+
+2. Test the installation.
+
+```bash
+docker version
+docker-compose --version
+```
+
+### Node.js & NPM
+
+1. Follow [Node.js official website](https://nodejs.org/en/) to install Node.js and NPM. Alternatively, you can install [nvm (node version manager)](https://github.com/creationix/nvm) to install Node.js and NPM.
+
+2. Test the installation.
+
+```bash
+node -v
+npm -v
+```
 
 ## Local deployment
 
@@ -96,11 +122,11 @@ After all containers are up, browse to each member's admin web app to transact o
 Tail logs of each member's docker containers by passing its name as organization `-o` argument:
 ```bash
 # orderer
-./network.sh -m logs -m blockchain.uofa.edu
+./network.sh -m logs -o blockchain.uofa.edu
 
 # members
-./network.sh -m logs -m dmv
-./network.sh -m logs -m dealer
+./network.sh -m logs -o dmv
+./network.sh -m logs -o dealer
 ```
 Stop all:
 ```bash
@@ -114,12 +140,12 @@ Remove dockers:
 Deploy the codechix-service middleware, mysql for master data, portainer UI and the electrode UI
 
 ```bash
-cd codechix-service
+cd car-service
 npm install
 cd ../car-blockchain
 npm install
 cd ..
-./network -m util-up
+./network.sh -m util-up
 ```
 
 Once the container are up, go to 
