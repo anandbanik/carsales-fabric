@@ -5,7 +5,7 @@ import "../../styles/skeleton.css";
 import "../../styles/custom.css";
 import "../../styles/user.css";
 import negotiationStyles from "../../styles/negotiation.css";
-
+import custom from "../../styles/custom.css";
 import getToken from "../../helper/get-token";
 import { createLoan } from "../../helper/nodeservice-helper";
 
@@ -54,19 +54,19 @@ class Transaction extends React.Component {
       <div className={negotiationStyles.negotiation}>
         <div className={negotiationStyles["vehicle-info"]}>
           <div className={negotiationStyles["vehicle-info-text"]}>
-            <section className={negotiationStyles["basic-info"]}>
+            <div className={negotiationStyles["basic-info"]}>
               VIN: {this.props.data.vin_number}
               <br />
               SSN: {"user-admin"}
-            </section>
+            </div>
 
-            <section className={negotiationStyles["loan-info"]}>
+            <div className={negotiationStyles["loan-info"]}>
               Loan Status: {this.props.data.status}
               <br />
               Loan APR: {this.props.data.apr}
               <br />
               Loan Term: {this.props.data.loan_period_months}
-            </section>
+            </div>
           </div>
           <div className={negotiationStyles.expectation}>
             <span className={negotiationStyles.subtitle}>
@@ -80,7 +80,8 @@ class Transaction extends React.Component {
             <br />
 
             <button
-              className={negotiationStyles.button}
+              className={custom.buttonSuccess}
+              style={{width: "45%"}}
               onClick={this.handleSubmit}
             >
               Approve

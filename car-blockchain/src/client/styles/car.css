@@ -1,53 +1,65 @@
 .car {
-  width: 100%;
+  width: 70%;
   align-items: left;
-  margin: 0 0 5px 0;
-  padding: 15px 0;
+  margin: 0;
+  padding: 0;
+  margin-top: 40px;
+  float: right;
+  -webkit-box-shadow: 0px 0px 4px 0px rgba(94,94,94,0.42);
+  -moz-box-shadow: 0px 0px 4px 0px rgba(94,94,94,0.42);
+  box-shadow: 0px 0px 4px 0px rgba(94,94,94,0.42);
+  background-color: #fff;
 }
 
 .car .car-info {
+  float: left;
+   
+}
+
+.car .car-info,
+.car .car-price {
+  padding: 20px;
+  margin-top: 5px;
+}
+
+.car .car-price {
+  float: right;
+}
+.car .car-img {
+  float: left;
+}
+
+.car .car-img
+ {
+  width: 30%;
+  height: 100%;
   text-align: left;
 }
 
-.car .car-img,
-.car .car-price {
-  text-align: center;
-}
-
-.car .car-img,
-.car .car-info,
-.car .car-price {
-  width: 33%;
-  height: 100%;
-}
-
 .car .car-img {
-  max-width: 300px;
-  margin: 0 auto;
+  
+  margin: 0;
   text-align: center;
 }
 
 .car .car-title {
   font-weight: 800;
   font-size: 1.3em;
+  float: left;
+  line-height: 40px;
+  border-bottom: 1px dashed #ddd;
+  margin-bottom: 10px;
+ 
 }
 
 .car .car-price .car-price-sale {
   color: #77a1d3;
   font-weight: 800;
-  font-size: 1.6em;
+  font-size: 1.3em;
+  line-height: 40px;
 }
 
-.car .car-price button {
-  border: none;
-  color: white;
-  background-image: linear-gradient(
-    to right,
-    #818387 0%,
-    #d4d6db 51%,
-    #818387 100%
-  );
-}
+
 
 .car button.hide {
   display: none;

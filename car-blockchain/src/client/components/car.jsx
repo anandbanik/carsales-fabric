@@ -7,7 +7,7 @@ import "../styles/custom.css";
 import "../styles/dealer.css";
 import sectionStyles from "../styles/section.css";
 import carStyles from "../styles/car.css";
-
+import skeleton from "../styles/skeleton.css";
 import mazdaImg from "../images/car-inventory/mazda.png";
 import mazdaRedImg from "../images/car-inventory/mazda-red.png";
 import blackMerc from "../images/car-inventory/black-c300.jpg";
@@ -54,33 +54,35 @@ class Car extends React.Component {
     }
 
     return (
-      <section className={`${carStyles.car} ${sectionStyles["flex-container"]}`}>
+      <div className={`${carStyles.car} ${sectionStyles["flex-container"]}`}>
         {/* Right Car Image */}
-        <img className={`${carStyles["car-img"]}`} src={this.props.img} />
+       <img className={`${carStyles["car-img"]}`} src={this.props.img} />
 
-        {/* Middle Car Details */}
-        <div className={`${carStyles["car-info"]}`}>
+      
+        <div className={`${carStyles["car-info"]}`} >
           <span className={`${carStyles["car-title"]}`}>
             Used {this.props.vehicle_year} {this.props.vehicle_make} {this.props.vehicle_model}
+           
           </span>
           <br />
-          Vehicle Type: {this.props.vehicle_type}
+          <b>Vehicle Type:</b>{this.props.vehicle_type}
           <br />
-          Exterior Color: {this.props.vehicle_color}
+          <b>Exterior Color: </b>{this.props.vehicle_color}
           <br />
-          VIN: {this.props.vin_number}
+          <b>VIN:</b> {this.props.vin_number}
         </div>
 
-        {/* Right Car Price */}
-        <div className={`${carStyles["car-price"]}`}>
+       
+        <div className={`${carStyles["car-price"]}`} >
           <span className={`${carStyles["car-price-sale"]}`}>
             Sale Price: {this.props.actual_price}
           </span>
           <br />
           List Price: {this.props.list_price}
           <br />
+          <br />
           <button
-            className={ role === "dealer" ? `${carStyles.hide}` : ""}
+            className={ role === "dealer" ? `${carStyles.hide}` : skeleton["button-primary"]}
             onClick={() => {
               browserHistory.push({
                 pathname: "/car-details",
@@ -91,7 +93,7 @@ class Car extends React.Component {
             Details
           </button>
         </div>
-      </section>
+      </div>
     );
   }
 }

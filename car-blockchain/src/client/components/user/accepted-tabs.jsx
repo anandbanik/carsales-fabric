@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import negotiationStyles from "../../styles/negotiation.css";
 import "../../styles/skeleton.css";
-import "../../styles/custom.css";
+import custom from"../../styles/custom.css";
 
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
@@ -17,20 +17,21 @@ class AcceptedTabs extends React.Component {
 
   render() {
     return (
-      <Tabs defaultIndex={0} onSelect={this.tabListHandler.bind(this)}>
-        <TabList>
+      <div>
+      <Tabs defaultIndex={0} style={{width:"100%"}}  onSelect={this.tabListHandler.bind(this)}>
+        <TabList style={{textAlign: "left"}}>
           <Tab selectedClassName={negotiationStyles.selectedTab}>
             Basic Info
           </Tab>
-          <Tab selectedClassName={negotiationStyles.selectedTab}>Loan</Tab>
-          <Tab selectedClassName={negotiationStyles.selectedTab}>Insurance</Tab>
-          <Tab selectedClassName={negotiationStyles.selectedTab}>
+          <Tab selectedClassName={negotiationStyles.selectedTab} style={{padding:"20px"}}>Loan</Tab>
+          <Tab selectedClassName={negotiationStyles.selectedTab} style={{padding:"20px"}}>Insurance</Tab>
+          <Tab selectedClassName={negotiationStyles.selectedTab} style={{padding:"20px"}}>
             Registration
           </Tab>
         </TabList>
 
         <TabPanel>
-          <section className={negotiationStyles["basic-info"]}>
+          <section style={{padding:"20px", width:"100%"}}>
             Transaction ID: {this.props.data.data.id}
             <br />
             VIN: {this.props.data.data.vin_number}
@@ -41,7 +42,7 @@ class AcceptedTabs extends React.Component {
           </section>
         </TabPanel>
         <TabPanel>
-          <section className={negotiationStyles["loan-info"]}>
+          <section style={{padding:"20px", width:"100%"}}>
             Loan Status: {this.props.loan ? this.props.loan.status : ""}
             <br />
             APR: {this.props.loan ? this.props.loan.apr : ""}
@@ -51,7 +52,7 @@ class AcceptedTabs extends React.Component {
           </section>
         </TabPanel>
         <TabPanel>
-          <section className={negotiationStyles["insurance-info"]}>
+          <section style={{padding:"20px", width:"100%"}}>
             Insurance Status:{" "}
             {this.props.insurance ? this.props.insurance.status : ""}
             <br />
@@ -69,7 +70,7 @@ class AcceptedTabs extends React.Component {
           </section>
         </TabPanel>
         <TabPanel>
-          <section className={negotiationStyles["registration-info"]}>
+          <section style={{padding:"20px", width:"100%"}}>
             Registration Status:{" "}
             {this.props.registration ? this.props.registration.status : ""}
             <br />
@@ -80,7 +81,7 @@ class AcceptedTabs extends React.Component {
             {this.props.registration ? this.props.registration.endDate : ""}
           </section>
         </TabPanel>
-      </Tabs>
+      </Tabs></div>
     );
   }
 }

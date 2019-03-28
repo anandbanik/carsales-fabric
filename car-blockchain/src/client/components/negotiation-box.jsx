@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ReactModal from "react-modal";
-
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import "../styles/skeleton.css";
 import customStyles from "../styles/custom.css";
 import "../styles/user.css";
@@ -28,6 +28,7 @@ class Negotiation extends React.Component {
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.preCheck = this.preCheck.bind(this);
+    console.log(props);
   }
 
   handleOpenModal() {
@@ -84,7 +85,10 @@ class Negotiation extends React.Component {
       const ssnNumber = this.props.data.ssn_number;
       const status = this.props.data.status;
       const actualPrice = this.state.setPrice;
-
+      const userType = this.props.data.userType;
+      const comment  = userType === "Customer" ? `${commentsText}<div class='customer'><b>${userType}: </b> ${replyText} </div>` : 
+      `${commentsText}<div class='dealer'><b>${userType}: </b> ${replyText} </div>`;
+      console.log("state - > ", this.state);
       getToken("dealer-admin", "dealer").then(bearToken => {
         dealerUser({
           bearToken,
@@ -100,7 +104,7 @@ class Negotiation extends React.Component {
           vin_number: vinNumber,
           actual_price: actualPrice,
           status,
-          comments: `${commentsText}\n${dealerName}: ${replyText}`
+          comments: comment
         }).then(() => {
           this.setState({
             showModal: true,
@@ -149,9 +153,12 @@ class Negotiation extends React.Component {
   }
 
   render() {
+    
     return (
       <div className={negotiationStyles.negotiation}>
         {/* Modal Box */}
+        
+        <span className={negotiationStyles.subtitle}> Negotiation for: {this.props.data.vin_number}</span>
         <ReactModal
           className={customStyles.customModal}
           isOpen={this.state.showModal}
@@ -167,17 +174,22 @@ class Negotiation extends React.Component {
         </ReactModal>
         <div className={negotiationStyles["vehicle-info"]}>
           <div className={negotiationStyles["vehicle-info-text"]}>
-            VIN: {this.props.data.vin_number}
+           <b> VIN:</b> {this.props.data.vin_number}
             <br />
-            Price: {this.props.data.actual_price}
+            <b>Price: </b>{this.props.data.actual_price}
             <br />
-            CustomerID: {this.props.data.customer_id}
+            <b>CustomerID:</b> {this.props.data.ssn_number} 
             <br />
-            Comments: <br />
+           {  this.props.data.comments === "" ? "" : <b>Comments:</b>}
+           <br /> 
             {this.props.data.comments.split("\n").map((item, key) => {
               return (
+                item === "" ? "" :
                 <span key={key}>
-                  {item}
+                  <div style={{border: "1px solid #ddd", borderRadius: "5px", padding:"10px", clear: "both", height:"150px", overflow:"scroll", width: "90%"}}>
+                    {ReactHtmlParser(item)}
+                  <div style={{ clear: "both"}}></div>
+                  </div>
                   <br />
                 </span>
               );
@@ -189,12 +201,12 @@ class Negotiation extends React.Component {
             <span className={negotiationStyles.subtitle}>
               Reply <br />
             </span>
-            <input
+            <input 
               className={
                 this.props.role === "user" ||
                 this.props.data.status === "approved"
                   ? negotiationStyles.hide
-                  : negotiationStyles.button
+                  : customStyles.inputText
               }
               placeholder="Set Price"
               value={this.state.setPrice}
@@ -204,7 +216,7 @@ class Negotiation extends React.Component {
               className={
                 this.props.data.status === "approved"
                   ? negotiationStyles.hide
-                  : ""
+                  : customStyles.inputText
               }
               value={this.state.replyText}
               onChange={this.handleComments}
@@ -214,7 +226,7 @@ class Negotiation extends React.Component {
             <br />
 
             <button
-              className={`${negotiationStyles.button} ${
+              className={`${customStyles.buttonSuccess} ${
                 this.props.data.status === "approved"
                   ? negotiationStyles.hide
                   : ""
@@ -228,7 +240,7 @@ class Negotiation extends React.Component {
                 this.props.role === "user" ||
                 this.props.data.status === "approved"
                   ? negotiationStyles.hide
-                  : negotiationStyles.button
+                  : customStyles.buttonSuccess
               }
               onClick={this.handleAccept.bind(this)}
             >
@@ -237,7 +249,7 @@ class Negotiation extends React.Component {
             <button
               className={
                 this.props.data.status === "approved"
-                  ? negotiationStyles.accepted
+                  ? customStyles.buttonSuccess
                   : negotiationStyles.hide
               }
             >
