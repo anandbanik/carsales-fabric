@@ -3,27 +3,27 @@ module.exports = (uname, role) => {
   let hostName = "";
   switch (role) {
     case "user":
-      hostName = "api.dmv.devpulsecon.com";
+      hostName = "api.dmv.blockchain.uofa.edu";
       portNumber = "4000";
       break;
     case "dealer":
-      hostName = "api.dealer.devpulsecon.com";
+      hostName = "api.dealer.blockchain.uofa.edu";
       portNumber = "4000";
       break;
     case "banker":
-      hostName = "api.banker.devpulsecon.com";
+      hostName = "api.banker.blockchain.uofa.edu";
       portNumber = "4000";
       break;
     case "insurance":
-      hostName = "api.insurance.devpulsecon.com";
+      hostName = "api.insurance.blockchain.uofa.edu";
       portNumber = "4000";
       break;
     case "registration":
-      hostName = "api.dmv.devpulsecon.com";
+      hostName = "api.dmv.blockchain.uofa.edu";
       portNumber = "4000";
       break;
     default:
-      hostName = "api.dmv.devpulsecon.com";
+      hostName = "api.dmv.blockchain.uofa.edu";
       portNumber = "4000";
       break;
   }
