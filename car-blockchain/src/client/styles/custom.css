@@ -1,11 +1,176 @@
 .container {
-  max-width: 800px;
+
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.tableStyle {
+  padding: 20px;
+  border: 1px solid #ddd;
+  width: 100%;
+
+}
+
+:global tr:nth-child(even) {background: #fff}
+:global tr:nth-child(odd) {background: #efefef}
+
+
+.tableStyle tr:nth-child(even) {background-color: #fff}
+.tableStyle tr:nth-child(odd) {background-color: #efefef}
+
+.tableStyle th, td {
+  padding: 20px;
+}
+
+
+.tableStyle tr {
+  border: 1px dashed #ddd;
+}
+
+.tableStyle td {
+  padding: 20px;
+  border: 1px dashed #ddd;
+}
+
+.innerContainer {
+
   width: 80%;
   margin-left: auto;
   margin-right: auto;
 }
+
+.buttonSuccess {
+  display: inline-block;
+  height: 38px;
+  padding: 0 30px;
+  color: #fff;
+  text-align: center;
+  background-color: #009933 !important;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #009933;
+  cursor: pointer;
+  box-sizing: border-box;
+  /* need to add this to get spacing between buttons.
+   * seems CSS module broke something */
+  margin: .2rem;
+  width: 90%;
+}
+
+.buttonSuccess:hover,
+buttonSuccess:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.buttonSuccess:focus,
+buttonSuccess:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
+  color: #fff;
+  border-color: #006600;
+  outline: 0;
+}
+
+.inputText {
+  height: 38px;
+  padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+  background-color: #fff;
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  box-shadow: none;
+  box-sizing: border-box;
+  width: 90%;
+}
+
+.carouselText {
+  padding: 100px;
+  
+}
+
+.carouselTextInner{
+  background-color: #000;
+  height: 200px;
+  opacity: 0.5;
+  color: white;
+  border-radius: 5px;
+  padding: 20px;
+  margin-top: -40px;
+}
+
+.imageM {
+background-image: url("../images/car-inventory/1.png");
+background-repeat: no-repeat, repeat;
+height: 400px;
+margin-top: -2px;
+
+}
+
+.breadCrums {
+ background-color: 	#1E90FF;
+ padding: 2px;
+ color: white;
+}
+
+
+.textDiv{
+  margin: auto;
+  margin-top: -50px;
+   background-color: rgb(0, 76, 145);
+    width: 100%;
+    color: white;
+     border-radius: 5px;
+     padding: 10px;
+}
+
+.headerTop {
+  color: rgba(0, 0, 0, 0.87);
+  background-color: rgb(0, 76, 145);
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  box-sizing: border-box;
+  font-family: Roboto, sans-serif;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  border-radius: 0px;
+  position: relative;
+  z-index: 1100;
+  width: 100%;
+  display: flex;
+  
+}
+
+.headerTop h1{
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  margin: 0px; 
+  padding-top: 0px; 
+  letter-spacing: 0px; 
+  font-size: 24px; 
+  font-weight: 400; 
+  color: rgb(255, 255, 255); 
+  height: 64px; 
+  line-height: 64px; 
+  flex: 1 1 0%;
+}
+
+.headerTop img{
+  height: 30px;
+  margin-right: 10px;
+  margin-bottom: -1px;
+}
+
 .header {
-  margin-top: 6rem;
+  
   text-align: center;
 }
 .docs-header {
@@ -40,9 +205,7 @@
 
 /* Larger than phone */
 @media (min-width: 550px) {
-  .header {
-    margin-top: 18rem;
-  }
+ 
 
   .docs-section {
     padding: 6rem 0;
@@ -114,6 +277,11 @@ img {
   justify-content: center;
 }
 
+.tabs {
+  float: left;
+  margin-left: 63px;
+  padding:"20px"
+}
 .buttonsList button {
   margin: 1% auto;
 }
@@ -126,9 +294,13 @@ img {
   top: 50%;
   left: 50%;
   margin: -70px 0 0 -170px;
-  border: 1px solid black;
-  border-radius: 10px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 4px;
   outline: none;
+  -webkit-box-shadow: 1px 1px 25px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 1px 1px 25px 0px rgba(0,0,0,0.75);
+box-shadow: 1px 1px 25px 0px rgba(0,0,0,0.75);
 }
 
 .customModal .closeButton {

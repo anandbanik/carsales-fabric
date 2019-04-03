@@ -18,3 +18,39 @@
 .userView .cars-list {
   width: 100%;
 }
+
+body{
+  background-color: #F8F8F8;
+}
+
+:global .customer{ float: left; background-color: #1E90FF; color: #fff; clear: both; padding: 7px; border-radius: 15px; margin: 6px;position: relative; padding-left: 14px; padding-right: 14px;}
+:global .dealer{ float: right; background-color: white; border: 2px solid #1E90FF; color: #1E90FF; clear: both; padding: 7px; border-radius: 15px; margin: 6px;position: relative;padding-left: 14px; padding-right: 14px;}
+:global .customer:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 9px solid transparent;
+	border-right-color: #1E90FF;
+	border-left: 0;
+	border-bottom: 0;
+	margin-top: -4.5px;
+	margin-left: -7px;
+}
+
+:global .dealer::after{
+  content: '';
+	position: absolute;
+	right: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 9px solid transparent;
+	border-left-color: #1E90FF;
+	border-right: 0;
+	border-bottom: 0;
+	margin-top: -4.5px;
+	margin-right: -9px;
+}

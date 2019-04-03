@@ -1,14 +1,20 @@
 .negotiation {
-  text-align: center;
+  
   margin: 0 auto;
   width: 100%;
 }
 
 .negotiation .expectation {
   width: 50%;
-  margin: 0 auto;
+  margin-top: 100px;
   text-align: left;
   display: inline-block;
+}
+
+.tabs {
+  float: left;
+  margin-left: 63px;
+  padding:"20px"
 }
 
 .negotiation .expectation input {
@@ -21,7 +27,7 @@
 
 .negotiation .subtitle {
   font-weight: 800;
-  font-size: 1.1em;
+  font-size: 1.5em;
 }
 
 .negotiation .expectation hr {
@@ -36,7 +42,7 @@
   width: 50%;
   display: inline-block;
   vertical-align: top;
-  text-align: center;
+  line-height: 30px;
   position: relative;
 }
 
@@ -49,14 +55,11 @@
   padding: 10px 10px 0;
 }
 
-.negotiation button {
-  color: white;
-  background-image: linear-gradient(to right, #000 0%, #d4d6db 51%, #000 100%);
-}
+
 
 .negotiation button:disabled {
   opacity: 0.5;
-  background-image: linear-gradient(to right, #555 0%, #d4d6db 51%, #555 100%);
+  background-image: #ddd
 }
 
 .negotiation .hide {
@@ -74,41 +77,50 @@
 }
 
 .negotiation section {
-  border: 1px solid #eee;
+  border-top: 1px solid #ddd;
   text-align: left;
   padding: 10px 90px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 25%;
-  margin: 0 auto;
+  line-height: 30px;
+  margin-top: -4px;
+  
+ 
+  
   min-width: 140px;
 }
 
 .negotiation ul {
-  display: flex;
+  display: inline-block;
   justify-content: center;
   align-items: center;
   list-style-type: none;
   
-  width: 25%;
-  margin: 0 auto;
+  width: 100%;
+  
+  margin: 0 !important;
 }
 
 .negotiation ul li {
-  background-color: #eee;
-  margin: 0;
-  border: 1px solid white;
-  padding: 0 10px;
-  min-width: 70px;
+  margin: 0 !important;
+  padding: 20px !important;
+  padding-left: 40px !important;
+  padding-right: 40px !important;
+  float: left;
+  border-radius: 5px 5px 0 0; 
 }
 
 .negotiation ul li:hover {
   cursor: pointer;
+  border-radius: 5px 5px 0 0; 
+  color: dodgerblue;
 }
 
 .negotiation ul li.selectedTab {
-  background: #555;
-  color: white;
+  background: #fff;
+  color: #000;
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  padding: 20px !important;
+  padding-left: 40px !important;
+  padding-right: 40px !important;
 }

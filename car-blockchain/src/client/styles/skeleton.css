@@ -166,7 +166,7 @@ html {
 }
 body {
   font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
-  line-height: 1.6;
+  
   font-weight: 400;
   font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #222;
@@ -411,19 +411,7 @@ pre > code {
   white-space: pre;
 }
 
-/* Tables
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-th, td {
-  padding: 12px 15px;
-  text-align: left;
-  border-bottom: 1px solid #E1E1E1;
-}
-th:first-child, td:first-child {
-  padding-left: 0;
-}
-th:last-child, td:last-child {
-  padding-right: 0;
-}
+
 
 /* Spacing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -433,7 +421,7 @@ button, .button {
 input, textarea, select, fieldset {
   margin-bottom: 1.5rem;
 }
-pre, blockquote, dl, figure, table, p, ul, ol, form {
+pre, blockquote, dl, figure, p, ul, ol, form {
   margin-bottom: 2.5rem;
 }
 

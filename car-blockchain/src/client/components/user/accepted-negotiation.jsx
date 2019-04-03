@@ -216,9 +216,10 @@ class AcceptedNegotiation extends React.Component {
           <div>{this.state.showedModalContent}</div>
         </ReactModal>
 
-        <div className={negotiationStyles["vehicle-info"]}>
-          <div className={negotiationStyles["vehicle-info-text"]}>
+        <div >
+          <div >
             <span className={negotiationStyles.subtitle}>Offer Accepted</span>
+            <br></br><br></br>
             <AcceptedTabs
               tabListHandler={this.tabListHandler.bind(this)}
               data={this.props}
@@ -228,7 +229,7 @@ class AcceptedNegotiation extends React.Component {
             />
           </div>
 
-          <div className={negotiationStyles.expectation}>
+          <div style={{width:"50%"}}>
             {/* Apply for loan */}
             <div
               className={
@@ -238,17 +239,20 @@ class AcceptedNegotiation extends React.Component {
               }
             >
               <input
+               className={customStyles.inputText}
                 value={this.state.inputLoanTerm}
                 onChange={this.updateInputTermValue}
                 placeholder={"Loan Term"}
               />
               <input
+               className={customStyles.inputText}
                 value={this.state.inputLoanAmount}
                 onChange={this.updateInputAmountValue}
                 placeholder={"Loan Amount"}
               />
               <button
-                className={negotiationStyles.button}
+               className={customStyles.buttonSuccess}
+               style={{width: "50%"}}
                 onClick={this.handleLoan}
                 disabled={this.state.loan && this.state.loan.status}
               >
@@ -265,9 +269,9 @@ class AcceptedNegotiation extends React.Component {
               }
             >
               <button
-                className={negotiationStyles.button}
+               className={customStyles.buttonSuccess}
                 onClick={this.handleInsurance}
-                disabled={this.state.loan && this.state.insurance.status}
+                disabled={this.state.loan && (this.state.insurance !== undefined ? this.state.insurance.status : false)}
               >
                 Insurance & Registration
               </button>

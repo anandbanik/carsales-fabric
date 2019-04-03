@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Banner from "../banner";
-
+import { browserHistory, Link } from "react-router";
+import custom from "../../styles/custom.css";
 import getToken from "../../helper/get-token";
 import {
   fetchAllInsurances,
@@ -61,7 +62,7 @@ class InsuranceBox extends React.Component {
         <td> {this.props.end_date} </td>
         <td> {this.props.status} </td>
         <td>
-          <button onClick={this.handleSubmit}>Approve</button>
+          <button onClick={this.handleSubmit} className={custom.buttonSuccess}>Approve</button>
         </td>
       </tr>
     );
@@ -85,16 +86,28 @@ class Broker extends React.Component {
   render() {
     return (
       <div>
-        <Banner className={"broker-banner"} title={"Insurance Broker View"} />
-        <div
-          className={`${sectionStyles["cars-list"]} ${
-            sectionStyles["flex-item"]
-          } ${sectionStyles["display-table"]}`}
-        >
-          <table>
+        {/* <Banner className={"broker-banner"} title={"Insurance Broker View"} /> */}
+        <div className={custom.breadCrums}>
+  <div className={custom.container}>
+  <Link style={{textDecoration: "none", color: "white"}} to="/">Home</Link> > Insurance Broker </div></div>
+        
+  <div style={{ backgroundColor: "#fff",fontWeight: "800", fontSize: "1.3em", border: "1px solid #eee", paddingTop: "20px", paddingBottom: "20px"}}> 
+      <div className={custom.container}>
+      <b>Insurance Broker View</b>
+      </div>
+      </div>
+
+      <div className={custom.container}>
+      <div style={{padding: "30px",  minHeight:"400px", marginTop:"40px",textAlign: "center" , borderRadius: "4px" ,border: "1px dashed #ddd", backgroundColor: "#fff"}} >
+
+       {this.state.insurance.length === 0 ? <span style={{color: "#ddd", lineHeight: "400px",fontSize: "30px"  }}>
+No transactions 
+</span> : 
+
+          <table className={custom.tableStyle}>
             <tbody>
-              <tr>
-                <td> VIN Number </td>
+              <tr >
+                <td > VIN Number </td>
                 <td> Coverage </td>
                 <td> Monthly Cost </td>
                 <td> Start Date </td>
@@ -106,9 +119,10 @@ class Broker extends React.Component {
                 <InsuranceBox key={v.vin_number} data={v} />
               ))}
             </tbody>
-          </table>
+          </table>}
+          </div></div>
         </div>
-      </div>
+      
     );
   }
 }
