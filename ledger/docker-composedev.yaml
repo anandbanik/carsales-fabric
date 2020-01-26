@@ -1,15 +1,18 @@
 version: '2'
 
+networks:
+  localnet:
+
 services:
   orderer:
     container_name: orderer
     image: hyperledger/fabric-orderer:$IMAGE_TAG
     environment:
-      - ORDERER_GENERAL_LOGLEVEL=debug
+      - FABRIC_LOGGING_SPEC=DEBUG
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=dev-genesis.block
-      - ORDERER_GENERAL_LOCALMSPID=DEFAULT
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
       - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/msp
       - GRPC_TRACE=all=true,
       - GRPC_VERBOSITY=debug
@@ -18,13 +21,19 @@ services:
     volumes:
       - ./dev-msp:/etc/hyperledger/msp
       - ./dev-genesis.block:/etc/hyperledger/fabric/dev-genesis.block
+    expose:
+      - 7050
     ports:
       - 7050:7050
+    networks:
+      - localnet
   
   # Added for CouchDB as State DB
   peerdb:
     container_name: peerdb
     image: hyperledger/fabric-couchdb:0.4.14
+    networks:
+      - localnet
 
   peer:
     container_name: peer
@@ -32,26 +41,36 @@ services:
     environment:
       - CORE_PEER_ID=peer
       - CORE_PEER_ADDRESS=peer:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer:7051
-      - CORE_PEER_LOCALMSPID=DEFAULT
+      # - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer:7051
+      - CORE_PEER_LOCALMSPID=peerMSP
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - CORE_LOGGING_LEVEL=DEBUG
+      - FABRIC_LOGGING_SPEC=DEBUG
       - CORE_CHAINCODE_LOGGING_LEVEL=DEBUG
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=ledger_localnet
       # Added for CouchDB as State DB
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=peerdb:5984
     volumes:
+      - ./myc.block:/etc/hyperledger/myc.block
+      - ./myc.tx:/etc/hyperledger/myc.tx
       - /var/run/:/host/var/run/
       - ./dev-msp:/etc/hyperledger/msp
+      - ./dev-users/admin/msp:/etc/hyperledger/admin/msp
+      - ./dev-users/admin/tls:/etc/hyperledger/admin/tls
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: peer node start --peer-chaincodedev=true -o orderer:7050
+    command: peer node start --peer-chaincodedev=true
     ports:
       - 7051:7051
       - 7053:7053
+    expose:
+      - 7051
+      - 7053
     depends_on:
       - orderer
       - peerdb
+    networks:
+      - localnet
 
   cli:
     container_name: cli
@@ -60,10 +79,10 @@ services:
     environment:
       - GOPATH=/opt/gopath
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - CORE_LOGGING_LEVEL=DEBUG
+      - FABRIC_LOGGING_SPEC=DEBUG
       - CORE_PEER_ID=cli
       - CORE_PEER_ADDRESS=peer:7051
-      - CORE_PEER_LOCALMSPID=DEFAULT
+      - CORE_PEER_LOCALMSPID=peerMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
     working_dir: /etc/hyperledger
     volumes:
@@ -71,34 +90,44 @@ services:
       - ../chaincode/go:/opt/gopath/src
       - ./myc.block:/etc/hyperledger/myc.block
       - ./myc.tx:/etc/hyperledger/myc.tx
-      - ./dev-msp:/etc/hyperledger/msp
+      - ./dev-users/admin/msp:/etc/hyperledger/msp
+      # - ./dev-msp:/etc/hyperledger/msp
+      - ./dev-config:/etc/hyperledger/config
+      - ./dev-users/admin/tls:/etc/hyperledger/tls
+      # - ./dev-tls:/etc/hyperledger/tls
+      - ./chaincode:/opt/gopath/src/chaincode
     command: >
-      bash -c "peer channel create -c myc -f myc.tx -o orderer:7050
-      && peer channel join -b myc.block
-      && sleep 600000
-      && exit 0"
+      bash -c "
+      peer channel create -c myc -f myc.tx -o orderer:7050 &&
+      peer channel join -b myc.block"
     depends_on:
       - orderer
       - peer
+    networks:
+      - localnet
 
-#  chaincode:
-#    container_name: chaincode
-#    image: hyperledger/fabric-ccenv
-#    tty: true
-#    environment:
-#      - GOPATH=/opt/gopath
-#      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-#      - CORE_LOGGING_LEVEL=DEBUG
-#      - CORE_PEER_ID=example02
-#      - CORE_PEER_ADDRESS=peer:7051
-#      - CORE_PEER_LOCALMSPID=DEFAULT
-#      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
-#    working_dir: /opt/gopath/src
-#    command: /bin/bash -c 'sleep 6000000'
-#    volumes:
-#      - /var/run/:/host/var/run/
-#      - ./dev-msp:/etc/hyperledger/msp
-#      - ../chaincode/go:/opt/gopath/src
-#    depends_on:
-#      - orderer
-#      - peer
+  chaincode:
+    container_name: chaincode
+    image: hyperledger/fabric-ccenv
+    tty: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_LOGGING_LEVEL=DEBUG
+      # - CORE_PEER_ID=example02
+      - CORE_PEER_ADDRESS=peer:7052
+      - CORE_PEER_LOCALMSPID=peerMSP
+      - CORE_CHAINCODE_ID_NAME=mycc:0
+      - CORE_CHAINCODE_LOGGING_LEVEL=debug
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
+    working_dir: /myown
+    command: /bin/bash -c 'go run *.go'
+    volumes:
+      - /var/run/:/host/var/run/
+      - ./dev-msp:/etc/hyperledger/msp
+      - ./chaincode:/myown
+    depends_on:
+      - orderer
+      - peer
+    networks:
+      - localnet

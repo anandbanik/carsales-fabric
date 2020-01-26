@@ -540,12 +540,23 @@ function downloadArtifactsOrderer() {
 }
 
 function devNetworkUp () {
-  docker-compose -f ${COMPOSE_FILE_DEV} up -d 2>&1
+  docker-compose -f ${COMPOSE_FILE_DEV} up -d orderer peerdb peer 2>&1
   if [ $? -ne 0 ]; then
     echo "ERROR !!!! Unable to start network"
     logs
     exit 1
   fi
+  echo "Started the network!"
+  sleep 10
+
+  # Join a new peer channel
+  docker-compose -f ${COMPOSE_FILE_DEV} up -d cli 2>&1
+  if [ $? -ne 0 ]; then
+    echo "ERROR !!!! Unable to start network"
+    logs
+    exit 1
+  fi
+  echo "Joined the network!"
 }
 
 function devNetworkDown () {
@@ -553,22 +564,24 @@ function devNetworkDown () {
 }
 
 function devInstall () {
-  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode install -p banker -n mycc -v 0"
+  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode install -p chaincode -n mycc -v 0"
 }
 
 function devInstantiate () {
   #docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode instantiate -n mycc -v 0 -C myc -c '{\"Args\":[\"init\",\"a\",\"999\",\"b\",\"100\"]}'"
-  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode instantiate -n mycc -v 0 -C myc -c '{\"Args\":[\"init\"]}'"
+  #docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode instantiate -n mycc -v 0 -C myc -c '{\"Args\":[\"init\"]}'"
+  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode instantiate -n mycc -v 0 -C myc -o orderer:7050 -c '{\"Args\":[\"init\"]}'"
 }
 
 function devInvoke () {
   #docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode invoke -n mycc -v 0 -C myc -c '{\"Args\":[\"move\",\"a\",\"b\",\"10\"]}'"
   #docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode invoke -n mycc -v 0 -C myc -c '{\"Args\":[\"negotiate\",\"vin3\",\"3000\"]}'"
-  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode invoke -n mycc -v 0 -C myc -c '{\"Args\":[\"loan\",\"loan1\",\"vin1\",\"30000\",\"36\",\"3\",\"300\"]}'"
+  #docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode invoke -n mycc -C myc -c '{\"Args\":[\"loan\",\"loan1\",\"vin1\",\"30000\",\"36\",\"3\",\"300\"]}'"
+  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode invoke -n mycc -C myc -c '{\"Function\":\"CREATE\",\"Args\":[\"a\",\"10\"]}'"
 }
 
 function devQuery () {
-  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode query -n mycc -C myc -c '{\"Args\":[\"query\",\"vin3\"]}'"
+  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode query -n mycc -C myc -c '{\"Function\":\"READ\",\"Args\":[\"a\"]}'"
 
  # docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode query -n mycc -C myc -c '{\"Args\":[\"qryNegotiate\",\"2000\"]}'"
 }
