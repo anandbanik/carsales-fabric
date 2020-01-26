@@ -4,5 +4,6 @@
 #
 
 OrganizationalUnitIdentifiers:
+  NodeOUs: true
   - Certificate: "cacerts/cacert.pem"
     OrganizationalUnitIdentifier: "COP"

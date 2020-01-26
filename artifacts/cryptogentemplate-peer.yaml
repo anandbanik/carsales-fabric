@@ -65,6 +65,7 @@ PeerOrgs:
     # sections and the aggregate nodes will be created for you.  Take care with
     # name collisions
     # ---------------------------------------------------------------------------
+    EnableNodeOUs: true
     Template:
       Count: 2
       # Start: 5
