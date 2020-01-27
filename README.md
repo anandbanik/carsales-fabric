@@ -273,17 +273,17 @@ connects to it to invoke and query.
 The dev network is composed of a minimal set of peer, orderer and cli containers and uses pre-generated artifacts
 checked into the source control. Channel and chaincodes names are `myc` and `mycc` and can be edited in `network.sh`.
 
+Place your chaincode in `Go` in the directory [ledger/chaincode](./ledger/chaincode) and rest is taken care for the devtest.
+
 Start containers for dev network:
 ```bash
 ./network.sh -m devup
 ./network.sh -m devinstall
 ```
 
-Start your chaincode in a debugger with env variables:
+Start your chaincode using the command
 ```bash
-CORE_CHAINCODE_LOGGING_LEVEL=debug
-CORE_PEER_ADDRESS=0.0.0.0:7051
-CORE_CHAINCODE_ID_NAME=mycc:0
+docker-compose -f ledger/docker-composedev.yaml up chaincode
 ```
 
 Now you can instantiate, invoke and query your chaincode:
