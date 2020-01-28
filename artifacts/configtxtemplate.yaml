@@ -153,7 +153,9 @@ Capabilities:
         # prior releases.
         # Prior to enabling V1.3 channel capabilities, ensure that all
         # orderers and peers on a channel are at v1.3.0 or later.
-        V1_3: true
+        V1_4_3: true
+        V1_3: false
+        V1_1: false
 
     # Orderer capabilities apply only to the orderers, and may be safely
     # used with prior release peers.
@@ -164,15 +166,17 @@ Capabilities:
         # level, but which would be incompatible with orderers from prior releases.
         # Prior to enabling V1.1 orderer capabilities, ensure that all
         # orderers on a channel are at v1.1.0 or later.
-        V1_1: true
+        V1_4_2: true
+        V1_1: false
 
     # Application capabilities apply only to the peer network, and may be safely
     # used with prior release orderers.
     # Set the value of the capability to true to require it.
     Application: &ApplicationCapabilities
+        V1_4_2: true
         # V1.3 for Application enables the new non-backwards compatible
         # features and fixes of fabric v1.3.
-        V1_3: true
+        V1_3: false
         # V1.2 for Application enables the new non-backwards compatible
         # features and fixes of fabric v1.2 (note, this need not be set if
         # later version capabilities are set)
@@ -181,6 +185,38 @@ Capabilities:
         # features and fixes of fabric v1.1 (note, this need not be set if
         # later version capabilities are set).
         V1_1: false
+
+################################################################################
+#
+#   SECTION: Application
+#
+#   - This section defines the values to encode into a config transaction or
+#   genesis block for application related parameters
+#
+################################################################################
+Application: &ApplicationDefaults
+
+    # Organizations is the list of orgs which are defined as participants on
+    # the application side of the network
+    Organizations:
+
+    # Policies defines the set of policies at this level of the config tree
+    # For Application policies, their canonical path is
+    #   /Channel/Application/<PolicyName>
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+
+    Capabilities:
+        <<: *ApplicationCapabilities
+
 
 ################################################################################
 #
@@ -248,37 +284,6 @@ Orderer: &OrdererDefaults
 
 ################################################################################
 #
-#   SECTION: Application
-#
-#   - This section defines the values to encode into a config transaction or
-#   genesis block for application related parameters
-#
-################################################################################
-Application: &ApplicationDefaults
-
-    # Organizations is the list of orgs which are defined as participants on
-    # the application side of the network
-    Organizations:
-
-    # Policies defines the set of policies at this level of the config tree
-    # For Application policies, their canonical path is
-    #   /Channel/Application/<PolicyName>
-    Policies:
-        Readers:
-            Type: ImplicitMeta
-            Rule: "ANY Readers"
-        Writers:
-            Type: ImplicitMeta
-            Rule: "ANY Writers"
-        Admins:
-            Type: ImplicitMeta
-            Rule: "MAJORITY Admins"
-
-    Capabilities:
-        <<: *ApplicationCapabilities
-
-################################################################################
-#
 #   CHANNEL
 #
 #   This section defines the values to encode into a config transaction or
@@ -320,10 +325,13 @@ Channel: &ChannelDefaults
 Profiles:
 
     OrdererGenesis:
+        <<: *ChannelDefaults
         Orderer:
             <<: *OrdererDefaults
             Organizations:
                 - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
         Consortiums:
             SampleConsortium:
                 Organizations:
@@ -333,6 +341,9 @@ Profiles:
                     - *ORG4
     register:
         Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
         Application:
             <<: *ApplicationDefaults
             Organizations:
@@ -340,8 +351,13 @@ Profiles:
                 - *ORG2
                 - *ORG3
                 - *ORG4
+            Capabilities:
+                <<: *ApplicationCapabilities
     ORG1-ORG2:
         Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
         Application:
             <<: *ApplicationDefaults
             Organizations:
@@ -349,6 +365,9 @@ Profiles:
                 - *ORG2
     ORG1-ORG3:
         Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
         Application:
             <<: *ApplicationDefaults
             Organizations:
@@ -356,6 +375,9 @@ Profiles:
                 - *ORG3
     ORG1-ORG4:
         Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
         Application:
             <<: *ApplicationDefaults
             Organizations:

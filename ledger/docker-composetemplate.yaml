@@ -9,8 +9,7 @@ services:
 
   ca.ORG1.DOMAIN:
     container_name: ca.ORG1.DOMAIN
-    #image: hyperledger/fabric-ca:x86_64-1.0.3
-    image: hyperledger/fabric-ca:1.4.0
+    image: hyperledger/fabric-ca:$IMAGE_TAG
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.ORG1.DOMAIN-cert.pem
@@ -27,7 +26,7 @@ services:
 
   ca.ORG2.DOMAIN:
     container_name: ca.ORG2.DOMAIN
-    image: hyperledger/fabric-ca:1.4.0
+    image: hyperledger/fabric-ca:$IMAGE_TAG
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.ORG2.DOMAIN-cert.pem
@@ -44,8 +43,7 @@ services:
 
   orderer.DOMAIN:
     container_name: orderer.DOMAIN
-    #image: hyperledger/fabric-orderer
-    image: hyperledger/fabric-orderer:1.4.0
+    image: hyperledger/fabric-orderer:$IMAGE_TAG
     environment:
       - ORDERER_GENERAL_LOGLEVEL=debug
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0

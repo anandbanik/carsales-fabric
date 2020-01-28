@@ -130,11 +130,14 @@ function generateOrdererArtifacts() {
     sed -e "s/\DOMAIN/$DOMAIN/g" -e "s/\ORG1/$ORG1/g" -e "s/\ORG2/$ORG2/g" -e "s/\ORG3/$ORG3/g" -e "s/\ORG4/$ORG4/g" -e "s/^\s*\/\/.*$//g" artifacts/network-config-template.json > artifacts/network-config.json
 
     echo "Generating crypto material with cryptogen"
-    docker-compose --file ${f} run --rm "cli.$DOMAIN" bash -c "sleep 2 && cryptogen generate --config=cryptogen-$DOMAIN.yaml"
+    docker-compose --file ${f} run --rm "cli.$DOMAIN" bash -c "sleep 2 && rm -rf crypto-config/ordererOrganizations/$DOMAIN && cryptogen extend --config=cryptogen-$DOMAIN.yaml"
+
+    echo "Changing artifacts file ownership"
+    docker-compose --file ${f} run --rm "cli.$DOMAIN" bash -c "chown -R $UID:$GID ."
 
     echo "Generating orderer genesis block with configtxgen"
     mkdir -p artifacts/channel
-    docker-compose --file ${f} run --rm -e FABRIC_CFG_PATH=/etc/hyperledger/artifacts "cli.$DOMAIN" configtxgen -profile OrdererGenesis -outputBlock ./channel/genesis.block
+    docker-compose --file ${f} run --rm -e FABRIC_CFG_PATH=/etc/hyperledger/artifacts "cli.$DOMAIN" configtxgen -profile OrdererGenesis -outputBlock ./channel/genesis.block -channelID "genesis"
 
     for channel_name in register "$ORG1-$ORG2" "$ORG1-$ORG3" "$ORG1-$ORG4"
     do
@@ -295,7 +298,7 @@ function warmUpChaincode () {
 
     info "warming up chaincode $n on $channel_name on all peers of $org with query using $f"
 
-    c="CORE_PEER_ADDRESS=peer0.$org.$DOMAIN:7051 peer chaincode query -n $n -v 1.0 -c $CHAINCODE_WARMUP_QUERY -C $channel_name"
+    c="CORE_PEER_ADDRESS=peer0.$org.$DOMAIN:7051 peer chaincode query -n $n -c $CHAINCODE_WARMUP_QUERY -C $channel_name"
     i="cli.$org.$DOMAIN"
     echo ${i}
     echo ${c}
@@ -537,12 +540,23 @@ function downloadArtifactsOrderer() {
 }
 
 function devNetworkUp () {
-  docker-compose -f ${COMPOSE_FILE_DEV} up -d 2>&1
+  docker-compose -f ${COMPOSE_FILE_DEV} up -d orderer peerdb peer 2>&1
   if [ $? -ne 0 ]; then
     echo "ERROR !!!! Unable to start network"
     logs
     exit 1
   fi
+  echo "Started the network!"
+  sleep 10
+
+  # Join a new peer channel
+  docker-compose -f ${COMPOSE_FILE_DEV} up -d cli 2>&1
+  if [ $? -ne 0 ]; then
+    echo "ERROR !!!! Unable to start network"
+    logs
+    exit 1
+  fi
+  echo "Joined the network!"
 }
 
 function devNetworkDown () {
@@ -550,24 +564,26 @@ function devNetworkDown () {
 }
 
 function devInstall () {
-  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode install -p banker -n mycc -v 0"
+  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode install -p chaincode -n mycc -v 0"
 }
 
 function devInstantiate () {
   #docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode instantiate -n mycc -v 0 -C myc -c '{\"Args\":[\"init\",\"a\",\"999\",\"b\",\"100\"]}'"
-  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode instantiate -n mycc -v 0 -C myc -c '{\"Args\":[\"init\"]}'"
+  #docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode instantiate -n mycc -v 0 -C myc -c '{\"Args\":[\"init\"]}'"
+  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode instantiate -n mycc -v 0 -C myc -o orderer:7050 -c '{\"Args\":[\"init\"]}'"
 }
 
 function devInvoke () {
   #docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode invoke -n mycc -v 0 -C myc -c '{\"Args\":[\"move\",\"a\",\"b\",\"10\"]}'"
   #docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode invoke -n mycc -v 0 -C myc -c '{\"Args\":[\"negotiate\",\"vin3\",\"3000\"]}'"
-  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode invoke -n mycc -v 0 -C myc -c '{\"Args\":[\"loan\",\"loan1\",\"vin1\",\"30000\",\"36\",\"3\",\"300\"]}'"
+  #docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode invoke -n mycc -C myc -c '{\"Args\":[\"loan\",\"loan1\",\"vin1\",\"30000\",\"36\",\"3\",\"300\"]}'"
+  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode invoke -n mycc -C myc -c '{\"Function\":\"CREATE\",\"Args\":[\"a\",\"10\"]}'"
 }
 
 function devQuery () {
-  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode query -n mycc -v 0 -C myc -c '{\"Args\":[\"query\",\"vin3\"]}'"
+  docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode query -n mycc -C myc -c '{\"Function\":\"READ\",\"Args\":[\"a\"]}'"
 
- # docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode query -n mycc -v 0 -C myc -c '{\"Args\":[\"qryNegotiate\",\"2000\"]}'"
+ # docker-compose -f ${COMPOSE_FILE_DEV} run cli bash -c "peer chaincode query -n mycc -C myc -c '{\"Args\":[\"qryNegotiate\",\"2000\"]}'"
 }
 
 function info() {
@@ -595,7 +611,7 @@ function clean() {
 }
 
 function generateWait() {
-  echo "$(date --rfc-3339='seconds' -u) *** Wait for 7 minutes to make sure the certificates become active ***"
+  echo "$(date -u "+%Y-%m-%d %T %Z") *** Wait for 7 minutes to make sure the certificates become active ***"
   sleep 7m
 }
 
