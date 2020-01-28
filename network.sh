@@ -606,7 +606,7 @@ function clean() {
 }
 
 function generateWait() {
-  echo "$(date --rfc-3339='seconds' -u) *** Wait for 7 minutes to make sure the certificates become active ***"
+  echo "$(date -u "+%Y-%m-%d %T %Z") *** Wait for 7 minutes to make sure the certificates become active ***"
   sleep 7m
 }
 
