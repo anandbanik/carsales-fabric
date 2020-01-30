@@ -4,29 +4,25 @@
 
 version: '2'
 
+volumes:
+  peer0.ORG.DOMAIN:
+  peer1.ORG.DOMAIN:
+
 services:
 
-  ca.ORG.DOMAIN:
-    container_name: ca.ORG.DOMAIN
-    image: hyperledger/fabric-ca:$IMAGE_TAG
-    environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.ORG.DOMAIN-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA_PRIVATE_KEY
-      - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.ORG.DOMAIN-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA_PRIVATE_KEY
-#    ports:
-#      - CA_PORT:7054
-    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
-    volumes:
-      - ../artifacts/crypto-config/peerOrganizations/ORG.DOMAIN/ca/:/etc/hyperledger/fabric-ca-server-config
-      - ../artifacts/fabric-ca-server-config-ORG.yaml:/etc/hyperledger/fabric-ca-server/fabric-ca-server-config.yaml
-
-  #Added for CouchDB
-  peerdb.ORG.DOMAIN:
-    container_name: peerdb.ORG.DOMAIN
+  peer0db.ORG.DOMAIN:
+    container_name: peer0db.ORG.DOMAIN
     image: hyperledger/fabric-couchdb:0.4.14
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+
+  peer1db.ORG.DOMAIN:
+    container_name: peer1db.ORG.DOMAIN
+    image: hyperledger/fabric-couchdb:0.4.14
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
 
   peer0.ORG.DOMAIN:
     container_name: peer0.ORG.DOMAIN
@@ -37,17 +33,24 @@ services:
       - CORE_PEER_ID=peer0.ORG.DOMAIN
       - CORE_PEER_LOCALMSPID=ORGMSP
       - CORE_PEER_ADDRESS=peer0.ORG.DOMAIN:7051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.ORG.DOMAIN:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.ORG.DOMAIN:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.ORG.DOMAIN:7051
        # Added for CouchDB as State DB
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=peerdb.ORG.DOMAIN:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=peer0db.ORG.DOMAIN:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     ports:
       - PEER0_PORT:7051
       - PEER0_EVENT_PORT:7053
     volumes:
+        - /var/run/:/host/var/run/
         - ../artifacts/crypto-config/peerOrganizations/ORG.DOMAIN/peers/peer0.ORG.DOMAIN/:/etc/hyperledger/crypto/peer
+        - peer0.ORG.DOMAIN:/var/hyperledger/production
     depends_on:
-      - ca.ORG.DOMAIN
-      - peerdb.ORG.DOMAIN
+      - peer0db.ORG.DOMAIN
     PEER_EXTRA_HOSTS
 
   peer1.ORG.DOMAIN:
@@ -59,17 +62,25 @@ services:
       - CORE_PEER_ID=peer1.ORG.DOMAIN
       - CORE_PEER_LOCALMSPID=ORGMSP
       - CORE_PEER_ADDRESS=peer1.ORG.DOMAIN:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.ORG.DOMAIN:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.ORG.DOMAIN:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.ORG.DOMAIN:7051
       # Added for CouchDB as State DB
-      #- CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      #- CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=peerdb.ORG.DOMAIN:5984
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=peer1db.ORG.DOMAIN:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     ports:
       - PEER1_PORT:7051
       - PEER1_EVENT_PORT:7053
     volumes:
+        - /var/run/:/host/var/run/
         - ../artifacts/crypto-config/peerOrganizations/ORG.DOMAIN/peers/peer1.ORG.DOMAIN/:/etc/hyperledger/crypto/peer
+        - peer1.ORG.DOMAIN:/var/hyperledger/production
     depends_on:
-      - ca.ORG.DOMAIN
-      - peerdb.ORG.DOMAIN
+      - peer1db.ORG.DOMAIN
     PEER_EXTRA_HOSTS
 
   # fabric-rest api server
@@ -102,6 +113,7 @@ services:
       service: cli.DOMAIN
     environment:
       - CORE_PEER_LOCALMSPID=ORGMSP
+      - CORE_PEER_ADDRESS=peer0.ORG.DOMAIN:7051
     volumes:
         - ../artifacts/crypto-config/peerOrganizations/ORG.DOMAIN/users/Admin@ORG.DOMAIN:/etc/hyperledger/crypto/peer
     CLI_EXTRA_HOSTS
