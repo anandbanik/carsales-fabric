@@ -1,0 +1,43 @@
+---
+name: car-sales-network-dmv
+version: 1.0.0
+client:
+  organization: dmv
+  connection:
+    timeout:
+      peer:
+        endorser: '300'
+organizations:
+  Orgdmv:
+    mspid: dmvMSP
+    peers:
+    - peer0.dmv.devpulsecon.com
+    - peer1.dmv.devpulsecon.com
+    certificateAuthorities:
+    - ca.dmv.devpulsecon.com
+peers:
+  peer0.orgdmv.devpulsecon.com:
+    url: grpcs://peer0.dmv.devpulsecon.com:7051
+    tlsCACerts:
+      pem: |
+        -----BEGIN CERTIFICATE-----nMIIChTCCAiugAwIBAgIQYBjZVe7N45Jy2aJe7mXfTzAKBggqhkjOPQQDAjCBjDELnMAkGA1UEBhMCVVMxETAPBgNVBAgTCEFya2Fuc2FzMRQwEgYDVQQHEwtCZW50b252naWxsZTEcMBoGA1UEChMTZG12LmRldnB1bHNlY29uLmNvbTESMBAGA1UECxMJTG9nnaXN0aWNzMSIwIAYDVQQDExl0bHNjYS5kbXYuZGV2cHVsc2Vjb24uY29tMB4XDTIwnMDUwNzE4NTkwMFoXDTMwMDUwNTE4NTkwMFowgYwxCzAJBgNVBAYTAlVTMREwDwYDnVQQIEwhBcmthbnNhczEUMBIGA1UEBxMLQmVudG9udmlsbGUxHDAaBgNVBAoTE2Rtndi5kZXZwdWxzZWNvbi5jb20xEjAQBgNVBAsTCUxvZ2lzdGljczEiMCAGA1UEAxMZndGxzY2EuZG12LmRldnB1bHNlY29uLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHnA0IABMxIAPu24rC4ajY6+plp1hBOYCqeS5YjNHEtGy9p7a+QTNYP3OPU+8N1R5FTnsmXvd2lxLvzbxVIa1h2QQrwa7GOjbTBrMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEnFjAUBggrBgEFBQcDAgYIKwYBBQUHAwEwDwYDVR0TAQH/BAUwAwEB/zApBgNVHQ4EnIgQgHi23Du1ceWPuBEokYhbMZlcP9MAGtB6yAwNLRXgO4FcwCgYIKoZIzj0EAwIDnSAAwRQIhANaWY1uUBK7hZKd9bR7lYmWFiK1ENPxHroFHbC7c/VhkAiBgI/q5CdXEnrd5tSZ4qv5DZOiUsCz3qxhC8U3L32kH2Gw==n-----END CERTIFICATE-----n
+    grpcOptions:
+      ssl-target-name-override: peer0.dmv.devpulsecon.com
+      hostnameOverride: peer0.dmv.devpulsecon.com
+  peer1.orgdmv.devpulsecon.com:
+    url: grpcs://peer1.dmv.devpulsecon.com:7056
+    tlsCACerts:
+      pem: |
+        -----BEGIN CERTIFICATE-----nMIIChTCCAiugAwIBAgIQYBjZVe7N45Jy2aJe7mXfTzAKBggqhkjOPQQDAjCBjDELnMAkGA1UEBhMCVVMxETAPBgNVBAgTCEFya2Fuc2FzMRQwEgYDVQQHEwtCZW50b252naWxsZTEcMBoGA1UEChMTZG12LmRldnB1bHNlY29uLmNvbTESMBAGA1UECxMJTG9nnaXN0aWNzMSIwIAYDVQQDExl0bHNjYS5kbXYuZGV2cHVsc2Vjb24uY29tMB4XDTIwnMDUwNzE4NTkwMFoXDTMwMDUwNTE4NTkwMFowgYwxCzAJBgNVBAYTAlVTMREwDwYDnVQQIEwhBcmthbnNhczEUMBIGA1UEBxMLQmVudG9udmlsbGUxHDAaBgNVBAoTE2Rtndi5kZXZwdWxzZWNvbi5jb20xEjAQBgNVBAsTCUxvZ2lzdGljczEiMCAGA1UEAxMZndGxzY2EuZG12LmRldnB1bHNlY29uLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHnA0IABMxIAPu24rC4ajY6+plp1hBOYCqeS5YjNHEtGy9p7a+QTNYP3OPU+8N1R5FTnsmXvd2lxLvzbxVIa1h2QQrwa7GOjbTBrMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEnFjAUBggrBgEFBQcDAgYIKwYBBQUHAwEwDwYDVR0TAQH/BAUwAwEB/zApBgNVHQ4EnIgQgHi23Du1ceWPuBEokYhbMZlcP9MAGtB6yAwNLRXgO4FcwCgYIKoZIzj0EAwIDnSAAwRQIhANaWY1uUBK7hZKd9bR7lYmWFiK1ENPxHroFHbC7c/VhkAiBgI/q5CdXEnrd5tSZ4qv5DZOiUsCz3qxhC8U3L32kH2Gw==n-----END CERTIFICATE-----n
+    grpcOptions:
+      ssl-target-name-override: peer1.dmv.devpulsecon.com
+      hostnameOverride: peer1.dmv.devpulsecon.com
+certificateAuthorities:
+  ca.orgdmv.devpulsecon.com:
+    url: https://ca.dmv.devpulsecon.com:7054
+    caName: ca-dmv
+    tlsCACerts:
+      pem: |
+        -----BEGIN CERTIFICATE-----nMIICfzCCAiWgAwIBAgIQVAWQAVqiLltQfObrOyYI3zAKBggqhkjOPQQDAjCBiTELnMAkGA1UEBhMCVVMxETAPBgNVBAgTCEFya2Fuc2FzMRQwEgYDVQQHEwtCZW50b252naWxsZTEcMBoGA1UEChMTZG12LmRldnB1bHNlY29uLmNvbTESMBAGA1UECxMJTG9nnaXN0aWNzMR8wHQYDVQQDExZjYS5kbXYuZGV2cHVsc2Vjb24uY29tMB4XDTIwMDUwnNzE4NTkwMFoXDTMwMDUwNTE4NTkwMFowgYkxCzAJBgNVBAYTAlVTMREwDwYDVQQInEwhBcmthbnNhczEUMBIGA1UEBxMLQmVudG9udmlsbGUxHDAaBgNVBAoTE2Rtdi5knZXZwdWxzZWNvbi5jb20xEjAQBgNVBAsTCUxvZ2lzdGljczEfMB0GA1UEAxMWY2EunZG12LmRldnB1bHNlY29uLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABDR/n9ydTqTW4fEc+jrYXthIQQlHo/CkJlAo0YEULGh0bTExQbvlIM0Phnrfd7aUxVdHUnLpTgZsUbTaiDIcNEL0ajbTBrMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEFjAUBggrnBgEFBQcDAgYIKwYBBQUHAwEwDwYDVR0TAQH/BAUwAwEB/zApBgNVHQ4EIgQgtJVCnB8QHp1ADLv7TkbBbwcT8lHLd5fgi1Jo9X6F0+DwwCgYIKoZIzj0EAwIDSAAwRQIhnAKNNCvEiPEYcZ/XcdLQ09ikLh+jkmlXTlAyHsx3pLkINAiB9OH69HWq/kHwYOuscnwGYut3nfrXCUesY58FZPZNyJSw==n-----END CERTIFICATE-----n
+    httpOptions:
+      verify: false

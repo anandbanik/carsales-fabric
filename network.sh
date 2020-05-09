@@ -104,6 +104,51 @@ function removeDockersWithDomain() {
   fi
 }
 
+function one_line_pem {
+    echo "`awk 'NF {sub(/\\n/, ""); printf "%s\\\\\\\n",$0;}' $1`"
+}
+
+function json_ccp {
+    local PP=$(one_line_pem $5)
+    local CP=$(one_line_pem $6)
+    sed -e "s/\${ORG}/$1/" \
+        -e "s/\${DOMAIN}/$DOMAIN/" \
+        -e "s/\${P0PORT}/$2/" \
+        -e "s/\${P1PORT}/$3/" \
+        -e "s/\${CAPORT}/$4/" \
+        -e "s#\${PEERPEM}#$PP#" \
+        -e "s#\${CAPEM}#$CP#" \
+        artifacts/ccp-template.json 
+}
+
+function yaml_ccp {
+    local PP=$(one_line_pem $5)
+    local CP=$(one_line_pem $6)
+    sed -e "s/\${ORG}/$1/" \
+        -e "s/\${DOMAIN}/$DOMAIN/" \
+        -e "s/\${P0PORT}/$2/" \
+        -e "s/\${P1PORT}/$3/" \
+        -e "s/\${CAPORT}/$4/" \
+        -e "s#\${PEERPEM}#$PP#" \
+        -e "s#\${CAPEM}#$CP#" \
+        artifacts/ccp-template.yaml | sed -e $'s/\\\\n/\\\n        /g'
+}
+
+function generateConnProfiles() {
+    org=$1
+    P0PORT=$2
+    P1PORT=$3
+    CAPORT=$4
+
+    PEERPEM=artifacts/crypto-config/peerOrganizations/$org.$DOMAIN/tlsca/tlsca.$org.$DOMAIN-cert.pem
+    CAPEM=artifacts/crypto-config/peerOrganizations/$org.$DOMAIN/ca/ca.$org.$DOMAIN-cert.pem
+
+    echo "$(json_ccp $org $P0PORT $P1PORT $CAPORT $PEERPEM $CAPEM)" > artifacts/connection-${org}.json
+    echo "$(yaml_ccp $org $P0PORT $P1PORT $CAPORT $PEERPEM $CAPEM)" > artifacts/connection-${org}.yaml
+
+
+}
+
 function generateOrdererDockerCompose() {
     echo "Creating orderer docker compose yaml file with $DOMAIN, $ORG1, $ORG2, $ORG3, $ORG4, $DEFAULT_ORDERER_PORT, $DEFAULT_WWW_PORT"
 
@@ -209,6 +254,22 @@ function generatePeerArtifacts() {
     ca_private_key=$(basename `ls -t artifacts/crypto-config/peerOrganizations/"$org.$DOMAIN"/ca/*_sk`)
     [[ -z  ${ca_private_key}  ]] && echo "empty CA private key" && exit 1
     sed -i -e "s/CA_PRIVATE_KEY/${ca_private_key}/g" ${f}
+
+    echo "Generating Connection Profile for $org"
+    generateConnProfiles $org $peer0_port $peer1_port $ca_port
+}
+
+function testConnProfiles() {
+    org=$1
+    api_port=$2
+    www_port=$3
+    ca_port=$4
+    peer0_port=$5
+    peer0_event_port=$6
+    peer1_port=$7
+    peer1_event_port=$8
+    echo "Generating Connection Profile for $org"
+    generateConnProfiles $org $peer0_port $peer1_port $ca_port
 }
 
 function servePeerArtifacts() {
@@ -738,12 +799,12 @@ done
 
 if [ "${MODE}" == "up" -a "${ORG}" == "" ]; then
   mkdir -p www/artifacts
-  for org in ${DOMAIN} ${ORG1} ${ORG2} ${ORG3} ${ORG4}
+  for org in ${DOMAIN} ${ORG1} ${ORG2} 
   do
     dockerComposeUp ${org}
   done
 elif [ "${MODE}" == "api-up" -a "${ORG}" == "" ]; then
-  for org in ${ORG1} ${ORG2} ${ORG3} ${ORG4}
+  for org in ${ORG1} ${ORG2} 
   do 
     dockerComposeApiServerUp ${org}
   done  
@@ -753,43 +814,21 @@ elif [ "${MODE}" == "install" -a "${ORG}" == "" ]; then
     installDmvDealer ${org}
   done
 
-  for org in ${ORG1} ${ORG3}
-  do
-    installDmvBanker ${org}
-  done
-
-  for org in ${ORG1} ${ORG4}
-  do
-    installDmvInsurance ${org}
-  done
-
-  for org in ${ORG1} ${ORG2} ${ORG3} ${ORG4}
-  do
-    installDmvRegister ${org}
-  done
+  
 elif [ "${MODE}" == "channel" -a "${ORG}" == "" ]; then
   createJoinInstantiateWarmUp ${ORG1} "${ORG1}-${ORG2}" ${CHAINCODE_DMV_DEALER} ${CHAINCODE_DMV_DEALER_INIT}
-  createJoinInstantiateWarmUp ${ORG1} "${ORG1}-${ORG3}" ${CHAINCODE_DMV_BANKER} ${CHAINCODE_DMV_BANKER_INIT}
-  createJoinInstantiateWarmUp ${ORG1} "${ORG1}-${ORG4}" ${CHAINCODE_DMV_INSURANCE} ${CHAINCODE_DMV_INSURANCE_INIT}
-  createJoinInstantiateWarmUp ${ORG1} register ${CHAINCODE_DMV_REGISTER} ${CHAINCODE_DMV_REGISTER_INIT}
+  
   
   joinWarmUp ${ORG2} "${ORG1}-${ORG2}" ${CHAINCODE_DMV_DEALER} ${CHAINCODE_DMV_DEALER_INIT}
-  joinWarmUp ${ORG2} register ${CHAINCODE_DMV_REGISTER} ${CHAINCODE_DMV_REGISTER_INIT}
-
-  joinWarmUp ${ORG3} "${ORG1}-${ORG3}" ${CHAINCODE_DMV_BANKER} ${CHAINCODE_DMV_BANKER_INIT}
-  joinWarmUp ${ORG3} register ${CHAINCODE_DMV_REGISTER} ${CHAINCODE_DMV_REGISTER_INIT}
-
-  joinWarmUp ${ORG4} "${ORG1}-${ORG4}" ${CHAINCODE_DMV_INSURANCE} ${CHAINCODE_DMV_INSURANCE_INIT}
-  joinWarmUp ${ORG4} register ${CHAINCODE_DMV_REGISTER} ${CHAINCODE_DMV_REGISTER_INIT}
+  
 
 elif [ "${MODE}" == "down" ]; then
   dockerComposeDown ${DOMAIN}
   dockerComposeDown ${ORG1}
   dockerComposeDown ${ORG2}
-  dockerComposeDown ${ORG3}
-  dockerComposeDown ${ORG4}
   removeUnwantedContainers
   removeUnwantedImages
+  docker volume prune -f
 elif [ "${MODE}" == "clean" ]; then
   clean
 elif [ "${MODE}" == "util-up" ]; then
@@ -856,6 +895,9 @@ elif [ "${MODE}" == "channel-insurance" ]; then
 
 elif [ "${MODE}" == "logs" ]; then
   logs ${ORG}
+elif [ "${MODE}" == "profile" ]; then
+  testConnProfiles ${ORG1} 4000 8081 7054 7051 7053 7056 7058
+  testConnProfiles ${ORG2} 4001 8082 8054 8051 8053 8056 8058
 elif [ "${MODE}" == "devup" ]; then
   devNetworkUp
 elif [ "${MODE}" == "devinstall" ]; then

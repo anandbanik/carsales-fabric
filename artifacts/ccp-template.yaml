@@ -1,0 +1,43 @@
+---
+name: car-sales-network-${ORG}
+version: 1.0.0
+client:
+  organization: ${ORG}
+  connection:
+    timeout:
+      peer:
+        endorser: '300'
+organizations:
+  Org${ORG}:
+    mspid: ${ORG}MSP
+    peers:
+    - peer0.${ORG}.${DOMAIN}
+    - peer1.${ORG}.${DOMAIN}
+    certificateAuthorities:
+    - ca.${ORG}.${DOMAIN}
+peers:
+  peer0.org${ORG}.${DOMAIN}:
+    url: grpcs://peer0.${ORG}.${DOMAIN}:${P0PORT}
+    tlsCACerts:
+      pem: |
+        ${PEERPEM}
+    grpcOptions:
+      ssl-target-name-override: peer0.${ORG}.${DOMAIN}
+      hostnameOverride: peer0.${ORG}.${DOMAIN}
+  peer1.org${ORG}.${DOMAIN}:
+    url: grpcs://peer1.${ORG}.${DOMAIN}:${P1PORT}
+    tlsCACerts:
+      pem: |
+        ${PEERPEM}
+    grpcOptions:
+      ssl-target-name-override: peer1.${ORG}.${DOMAIN}
+      hostnameOverride: peer1.${ORG}.${DOMAIN}
+certificateAuthorities:
+  ca.org${ORG}.${DOMAIN}:
+    url: https://ca.${ORG}.${DOMAIN}:${CAPORT}
+    caName: ca-${ORG}
+    tlsCACerts:
+      pem: |
+        ${CAPEM}
+    httpOptions:
+      verify: false

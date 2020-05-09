@@ -1,0 +1,60 @@
+{
+    "name": "car-sales-network-dealer",
+    "version": "1.0.0",
+    "client": {
+        "organization": "dealer",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                }
+            }
+        }
+    },
+    "organizations": {
+        "Orgdealer": {
+            "mspid": "dealerMSP",
+            "peers": [
+                "peer0.dealer.devpulsecon.com",
+                "peer1.dealer.devpulsecon.com"
+            ],
+            "certificateAuthorities": [
+                "ca.dealer.devpulsecon.com"
+            ]
+        }
+    },
+    "peers": {
+        "peer0.dealer.devpulsecon.com": {
+            "url": "grpcs://peer0.dealer.devpulsecon.com:8051",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----nMIICkjCCAjigAwIBAgIRAIe9ip/l0PyEuooPqc7i7BswCgYIKoZIzj0EAwIwgZIxnCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhBcmthbnNhczEUMBIGA1UEBxMLQmVudG9undmlsbGUxHzAdBgNVBAoTFmRlYWxlci5kZXZwdWxzZWNvbi5jb20xEjAQBgNVBAsTnCUxvZ2lzdGljczElMCMGA1UEAxMcdGxzY2EuZGVhbGVyLmRldnB1bHNlY29uLmNvnbTAeFw0yMDA1MDcxODU5MDBaFw0zMDA1MDUxODU5MDBaMIGSMQswCQYDVQQGEwJVnUzERMA8GA1UECBMIQXJrYW5zYXMxFDASBgNVBAcTC0JlbnRvbnZpbGxlMR8wHQYDnVQQKExZkZWFsZXIuZGV2cHVsc2Vjb24uY29tMRIwEAYDVQQLEwlMb2dpc3RpY3MxnJTAjBgNVBAMTHHRsc2NhLmRlYWxlci5kZXZwdWxzZWNvbi5jb20wWTATBgcqhkjOnPQIBBggqhkjOPQMBBwNCAARVFr7rP+olT2Cj+6kZGMpNPd4gJ6sp3x9YSRAaGcr2n1aDMoEToi4cyKvfVXd/VtmhJVRNQlrLcu5o13PUeF8dCo20wazAOBgNVHQ8BAf8EnBAMCAaYwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMA8GA1UdEwEB/wQFnMAMBAf8wKQYDVR0OBCIEIK1f5xo/DS+0YAIWgIlirlHTKLLq1kZn/bZNlc4ZPEeHnMAoGCCqGSM49BAMCA0gAMEUCIQDTyk6lRTKwS0sglMRqvyzF3Wj3y9eNozyG7ocRnqkIzzgIgew9kSmi7XCPpUhjr5fwL1k6ajiNhbd47eTagQhHwRd4=n-----END CERTIFICATE-----n"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.dealer.devpulsecon.com",
+                "hostnameOverride": "peer0.dealer.devpulsecon.com"
+            }
+        },
+        "peer1.dealer.devpulsecon.com": {
+            "url": "grpcs://peer1.dealer.devpulsecon.com:8056",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----nMIICkjCCAjigAwIBAgIRAIe9ip/l0PyEuooPqc7i7BswCgYIKoZIzj0EAwIwgZIxnCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhBcmthbnNhczEUMBIGA1UEBxMLQmVudG9undmlsbGUxHzAdBgNVBAoTFmRlYWxlci5kZXZwdWxzZWNvbi5jb20xEjAQBgNVBAsTnCUxvZ2lzdGljczElMCMGA1UEAxMcdGxzY2EuZGVhbGVyLmRldnB1bHNlY29uLmNvnbTAeFw0yMDA1MDcxODU5MDBaFw0zMDA1MDUxODU5MDBaMIGSMQswCQYDVQQGEwJVnUzERMA8GA1UECBMIQXJrYW5zYXMxFDASBgNVBAcTC0JlbnRvbnZpbGxlMR8wHQYDnVQQKExZkZWFsZXIuZGV2cHVsc2Vjb24uY29tMRIwEAYDVQQLEwlMb2dpc3RpY3MxnJTAjBgNVBAMTHHRsc2NhLmRlYWxlci5kZXZwdWxzZWNvbi5jb20wWTATBgcqhkjOnPQIBBggqhkjOPQMBBwNCAARVFr7rP+olT2Cj+6kZGMpNPd4gJ6sp3x9YSRAaGcr2n1aDMoEToi4cyKvfVXd/VtmhJVRNQlrLcu5o13PUeF8dCo20wazAOBgNVHQ8BAf8EnBAMCAaYwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMA8GA1UdEwEB/wQFnMAMBAf8wKQYDVR0OBCIEIK1f5xo/DS+0YAIWgIlirlHTKLLq1kZn/bZNlc4ZPEeHnMAoGCCqGSM49BAMCA0gAMEUCIQDTyk6lRTKwS0sglMRqvyzF3Wj3y9eNozyG7ocRnqkIzzgIgew9kSmi7XCPpUhjr5fwL1k6ajiNhbd47eTagQhHwRd4=n-----END CERTIFICATE-----n"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer1.dealer.devpulsecon.com",
+                "hostnameOverride": "peer1.dealer.devpulsecon.com"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "ca.dealer.devpulsecon.com": {
+            "url": "https://ca.dealer.devpulsecon.com:8054",
+            "caName": "ca-dealer",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----nMIICjDCCAjKgAwIBAgIRAOzdUQEjIzzBDonn34ig7nowCgYIKoZIzj0EAwIwgY8xnCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhBcmthbnNhczEUMBIGA1UEBxMLQmVudG9undmlsbGUxHzAdBgNVBAoTFmRlYWxlci5kZXZwdWxzZWNvbi5jb20xEjAQBgNVBAsTnCUxvZ2lzdGljczEiMCAGA1UEAxMZY2EuZGVhbGVyLmRldnB1bHNlY29uLmNvbTAenFw0yMDA1MDcxODU5MDBaFw0zMDA1MDUxODU5MDBaMIGPMQswCQYDVQQGEwJVUzERnMA8GA1UECBMIQXJrYW5zYXMxFDASBgNVBAcTC0JlbnRvbnZpbGxlMR8wHQYDVQQKnExZkZWFsZXIuZGV2cHVsc2Vjb24uY29tMRIwEAYDVQQLEwlMb2dpc3RpY3MxIjAgnBgNVBAMTGWNhLmRlYWxlci5kZXZwdWxzZWNvbi5jb20wWTATBgcqhkjOPQIBBggqnhkjOPQMBBwNCAATvWF/d7IIgvEThFfxD5okcj0u+CH9B2+04UnaNjVGo3seJOYm+n8NuZU3sY9W8F+HAp1RjqLoPcppe1auUVYpqDo20wazAOBgNVHQ8BAf8EBAMCAaYwnHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMA8GA1UdEwEB/wQFMAMBAf8wnKQYDVR0OBCIEIAoxA/P6mLn32AP0laA3UTS/2GSsawFe4bl3w0ZM2RiqMAoGCCqGnSM49BAMCA0gAMEUCIQDJIBeEDF3JKgkp0VtDAZhfZs76cpGlHZ9SgCGZ2/SVGQIgnEqqSI5meG0u7nT5Hj7C2foamE11LgAx6ctO2p+7xcLM=n-----END CERTIFICATE-----n"
+            },
+            "httpOptions": {
+                "verify": false
+            }
+        }
+    }
+}
