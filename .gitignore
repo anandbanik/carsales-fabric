@@ -14,6 +14,8 @@ artifacts/fabric-ca-server-config-dealer.yaml
 artifacts/fabric-ca-server-config-dmv.yaml
 artifacts/fabric-ca-server-config-insurance.yaml
 artifacts/network-config.json
+artifacts/connection-*.yaml
+artifacts/connection-*.json
 artifacts/channel/
 artifacts/crypto-config/
 ledger/docker-compose-devpulsecon.com.yaml
@@ -32,3 +34,4 @@ artifacts/dmv-insurance.block
 artifacts/register.block
 codechix-service/node_modules
 car-blockchain/node_modules
+codechix-service/package-lock.json
