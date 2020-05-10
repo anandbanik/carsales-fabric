@@ -1,0 +1,85 @@
+
+# SPDX-License-Identifier: Apache-2.0
+version: '2.1'
+
+volumes:
+  pgdata:
+  walletstore:
+  grafana-storage:
+  prometheus-storage:
+
+networks:
+  mynetwork.com:
+    external:
+      name: ledger_default
+
+services:
+
+  explorerdb.devpulsecon.com:
+    image: hyperledger/explorer-db:latest
+    container_name: explorerdb.devpulsecon.com
+    hostname: explorerdb.devpulsecon.com
+    environment:
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWORD=password
+    healthcheck:
+      test: "pg_isready -h localhost -p 5432 -q -U postgres"
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - mynetwork.com
+
+  explorer.devpulsecon.com:
+    image: hyperledger/explorer:latest
+    container_name: explorer.devpulsecon.com
+    hostname: explorer.devpulsecon.com
+    environment:
+      - DATABASE_HOST=explorerdb.devpulsecon.com
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWD=password
+      - LOG_LEVEL_APP=debug
+      - LOG_LEVEL_DB=debug
+      - LOG_LEVEL_CONSOLE=info
+      - LOG_CONSOLE_STDOUT=true
+      - DISCOVERY_AS_LOCALHOST=false
+    volumes:
+      - ./config.json:/opt/explorer/app/platform/fabric/config.json
+      - ./connection-profile:/opt/explorer/app/platform/fabric/connection-profile
+      - ../artifacts/crypto-config:/tmp/crypto
+      - walletstore:/opt/wallet
+    command: sh -c "node /opt/explorer/main.js && tail -f /dev/null"
+    ports:
+      - 8090:8080
+    depends_on:
+      explorerdb.devpulsecon.com:
+        condition: service_healthy
+    networks:
+      - mynetwork.com
+
+  proms.devpulsecon.com:
+    container_name: proms.devpulsecon.com
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-storage:/prometheus
+    ports:
+      - '9090:9090'
+    networks:
+      - mynetwork.com
+
+  grafana.devpulsecon.com:
+    container_name: grafana.devpulsecon.com
+    image: grafana/grafana:latest
+    volumes:
+      - ./grafana/car-sales-grafana-dashboard.json:/var/lib/grafana/dashboards/mydashboard.json
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - grafana-storage:/var/lib/grafana
+    ports:
+      - '3000:3000'
+    networks:
+      - mynetwork.com

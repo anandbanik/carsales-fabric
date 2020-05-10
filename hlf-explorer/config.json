@@ -1,0 +1,9 @@
+{
+	"network-configs": {
+		"car-sales": {
+			"name": "car-sales",
+			"profile": "./connection-profile/car-sales.json"
+		}
+	},
+	"license": "Apache-2.0"
+}

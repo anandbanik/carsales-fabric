@@ -1,0 +1,100 @@
+{
+	"name": "car-sales",
+	"version": "1.0.0",
+	"client": {
+		"tlsEnable": true,
+		"adminUser": "admin",
+		"adminPassword": "adminpw",
+		"enableAuthentication": false,
+		"organization": "dmvMSP",
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "300"
+				},
+				"orderer": "300"
+			}
+		}
+	},
+	"channels": {
+		"dmv-dealer": {
+			"peers": {
+				"peer0.dmv.devpulsecon.com": {}
+			},
+			"connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+		},
+		"dmv-banker": {
+			"peers": {
+				"peer0.dmv.devpulsecon.com": {}
+			},
+			"connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+		},
+		"dmv-insurance": {
+			"peers": {
+				"peer0.dmv.devpulsecon.com": {}
+			},
+			"connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+		},
+		"register": {
+			"peers": {
+				"peer0.dmv.devpulsecon.com": {}
+			},
+			"connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+		}
+	},
+	"organizations": {
+		"dmvMSP": {
+			"mspid": "dmvMSP",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/dmv.devpulsecon.com/users/Admin@dmv.devpulsecon.com/msp/keystore/68372a047f7c085236c32f9923d345e335aa54f88b7f0368cbe477aa156d82bc_sk"
+			},
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/dmv.devpulsecon.com/users/Admin@dmv.devpulsecon.com/msp/signcerts/Admin@dmv.devpulsecon.com-cert.pem"
+			}
+		}
+	},
+	"peers": {
+		"peer0.dmv.devpulsecon.com": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/dmv.devpulsecon.com/peers/peer0.dmv.devpulsecon.com/tls/ca.crt"
+			},
+			"url": "grpcs://peer0.dmv.devpulsecon.com:7051",
+			"eventUrl": "grpcs://peer0.dmv.devpulsecon.com:7053",
+			"grpcOptions": {
+				"ssl-target-name-override": "peer0.dmv.devpulsecon.com"
+			}
+		}
+	}
+}

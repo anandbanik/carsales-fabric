@@ -799,12 +799,12 @@ done
 
 if [ "${MODE}" == "up" -a "${ORG}" == "" ]; then
   mkdir -p www/artifacts
-  for org in ${DOMAIN} ${ORG1} ${ORG2} 
+  for org in ${DOMAIN} ${ORG1} ${ORG2} ${ORG3} ${ORG4}
   do
     dockerComposeUp ${org}
   done
 elif [ "${MODE}" == "api-up" -a "${ORG}" == "" ]; then
-  for org in ${ORG1} ${ORG2} 
+  for org in ${ORG1} ${ORG2} ${ORG3} ${ORG4}
   do 
     dockerComposeApiServerUp ${org}
   done  
@@ -814,18 +814,40 @@ elif [ "${MODE}" == "install" -a "${ORG}" == "" ]; then
     installDmvDealer ${org}
   done
 
-  
+  for org in ${ORG1} ${ORG3}
+  do
+    installDmvBanker ${org}
+  done
+
+  for org in ${ORG1} ${ORG4}
+  do
+    installDmvInsurance ${org}
+  done
+
+  for org in ${ORG1} ${ORG2} ${ORG3} ${ORG4}
+  do
+    installDmvRegister ${org}
+  done
 elif [ "${MODE}" == "channel" -a "${ORG}" == "" ]; then
   createJoinInstantiateWarmUp ${ORG1} "${ORG1}-${ORG2}" ${CHAINCODE_DMV_DEALER} ${CHAINCODE_DMV_DEALER_INIT}
-  
+  createJoinInstantiateWarmUp ${ORG1} "${ORG1}-${ORG3}" ${CHAINCODE_DMV_BANKER} ${CHAINCODE_DMV_BANKER_INIT}
+  createJoinInstantiateWarmUp ${ORG1} "${ORG1}-${ORG4}" ${CHAINCODE_DMV_INSURANCE} ${CHAINCODE_DMV_INSURANCE_INIT}
+  createJoinInstantiateWarmUp ${ORG1} register ${CHAINCODE_DMV_REGISTER} ${CHAINCODE_DMV_REGISTER_INIT}
   
   joinWarmUp ${ORG2} "${ORG1}-${ORG2}" ${CHAINCODE_DMV_DEALER} ${CHAINCODE_DMV_DEALER_INIT}
-  
+  joinWarmUp ${ORG2} register ${CHAINCODE_DMV_REGISTER} ${CHAINCODE_DMV_REGISTER_INIT}
 
+  joinWarmUp ${ORG3} "${ORG1}-${ORG3}" ${CHAINCODE_DMV_BANKER} ${CHAINCODE_DMV_BANKER_INIT}
+  joinWarmUp ${ORG3} register ${CHAINCODE_DMV_REGISTER} ${CHAINCODE_DMV_REGISTER_INIT}
+
+  joinWarmUp ${ORG4} "${ORG1}-${ORG4}" ${CHAINCODE_DMV_INSURANCE} ${CHAINCODE_DMV_INSURANCE_INIT}
+  joinWarmUp ${ORG4} register ${CHAINCODE_DMV_REGISTER} ${CHAINCODE_DMV_REGISTER_INIT}
 elif [ "${MODE}" == "down" ]; then
   dockerComposeDown ${DOMAIN}
   dockerComposeDown ${ORG1}
   dockerComposeDown ${ORG2}
+  dockerComposeDown ${ORG3}
+  dockerComposeDown ${ORG4}
   removeUnwantedContainers
   removeUnwantedImages
   docker volume prune -f
@@ -898,6 +920,8 @@ elif [ "${MODE}" == "logs" ]; then
 elif [ "${MODE}" == "profile" ]; then
   testConnProfiles ${ORG1} 4000 8081 7054 7051 7053 7056 7058
   testConnProfiles ${ORG2} 4001 8082 8054 8051 8053 8056 8058
+  testConnProfiles ${ORG3} 4002 8083 9054 9051 9053 9056 9058
+  testConnProfiles ${ORG4} 4003 8084 10054 10051 10053 10056 10058
 elif [ "${MODE}" == "devup" ]; then
   devNetworkUp
 elif [ "${MODE}" == "devinstall" ]; then
