@@ -68,12 +68,15 @@ func (t *DmvCommonChaincode) register(stub shim.ChaincodeStubInterface, args []s
 			ssn := args[0]
 			vin := args[1]
 
-			location, err := time.LoadLocation("America/Chicago")
-			if err != nil {
-				fmt.Println(err)
-			}
-			startDate := time.Now().In(location)
-			endDate := startDate.Add(time.Hour * 24 * 365)
+			// location, err := time.LoadLocation("America/Chicago")
+			// if err != nil {
+			// 	fmt.Println(err)
+			// }
+			// startDate := time.Now().In(location)
+			// endDate := startDate.Add(time.Hour * 24 * 365)
+
+			startDate := "2009-11-10 17:00:00 -0600 CST"
+			endDate := "2010-11-10 17:00:00 -0600 CST"
 
 			status := "Applied"
 			regKey := ssn + "@" + vin
