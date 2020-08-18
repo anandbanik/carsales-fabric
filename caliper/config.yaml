@@ -1,0 +1,44 @@
+test:
+    workers:
+      type: local
+      number: 5
+    rounds:
+      - label: Register.
+        txDuration:
+          - 30
+        rateControl:
+          - type: fixed-backlog
+            opts:
+              transaction_load: 5
+        workload:
+          module: workloads/dmvRegister.js
+      - label: Query.
+        txDuration:
+          - 30
+        rateControl:
+          - type: fixed-backlog
+            opts:
+              transaction_load: 5
+        workload:
+          module: workloads/dmvQuery.js
+      - label: Approved.
+        txDuration:
+          - 30
+        rateControl:
+          - type: fixed-backlog
+            opts:
+              transaction_load: 5
+        workload:
+          module: workloads/dmvApprove.js
+  monitor:
+    type:
+      - docker
+      - process
+    docker:
+      name:
+        - all
+    process:
+      - command: node
+        arguments: fabricClientWorker.js
+        multiOutput: avg
+    interval: 1
